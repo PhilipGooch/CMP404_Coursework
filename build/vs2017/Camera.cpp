@@ -25,7 +25,6 @@ Camera::Camera(gef::Platform& platform, gef::InputManager* input_manager) :
 
 void Camera::Init(gef::Platform& platform)
 {
-	
 }
 
 void Camera::Cleanup()

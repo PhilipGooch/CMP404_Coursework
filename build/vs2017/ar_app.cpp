@@ -42,14 +42,6 @@ ARApp::ARApp(gef::Platform& platform) :
 
 void ARApp::Init()
 {
-	gef::Matrix44 a;
-	a.SetRow(0, gef::Vector4(1, 3, 1, 0));
-	a.SetRow(1, gef::Vector4(4, 2, 2, 0));
-	a.SetRow(2, gef::Vector4(2, -1, -3, 0));
-	a.SetRow(3, gef::Vector4(0, 4, 0, 1));
-
-	gef::Matrix44 b;
-	b.AffineInverse(a);
 	srand(time(NULL));
 
 	input_manager_ = gef::InputManager::Create(platform_);
@@ -63,7 +55,7 @@ void ARApp::Init()
 
 	for (int i = 0; i < 10; i++)
 	{
-		cows.push_back(new Cow(*renderer_3d_, *primitive_builder_, cow_materials_));
+		//cows.push_back(new Cow(*renderer_3d_, *primitive_builder_, cow_materials_));
 	}
 
 	table_mesh = primitive_builder_->CreatePlaneMesh(gef::Vector4(ENVIRONMENT_HALF_WIDTH, 0.f, ENVIRONMENT_HALF_DEPTH));
@@ -522,7 +514,6 @@ void ARApp::RenderOverlay()
 	// render 2d hud on top
 	//
 	gef::Matrix44 proj_matrix2d;
-
 	proj_matrix2d = platform_.OrthographicFrustum(0.0f, platform_.width(), 0.0f, platform_.height(), -1.0f, 1.0f);
 	sprite_renderer_->set_projection_matrix(proj_matrix2d);
 	sprite_renderer_->Begin(false);

@@ -8,6 +8,7 @@ namespace gef
 	class InputManager;
 	class SpriteRenderer;
 	class AudioManager;
+	class Renderer3D;
 }
 class MenuState;
 class GameState;
@@ -16,18 +17,33 @@ class OptionsState;
 class StateMachine
 {
 public:
-	StateMachine();
+	StateMachine(gef::Platform* platform, 
+				 gef::InputManager* input_manager, 
+				 gef::AudioManager* audio_manager, 
+				 gef::SpriteRenderer* sprite_renderer,
+				 gef::Renderer3D* renderer_3D,
+				 gef::Font* font,
+				 std::vector<gef::Mesh*> meshes);
+
 	~StateMachine();
 
-	void SetState(State::TYPE type);
+	enum STATE
+	{
+		MENU,
+		GAME,
+		OPTIONS
+	};
+
+	void SetState(STATE type);
 
 	inline State* GetState() { return state_; }
 
 private:
+
 	gef::Platform* platform_;
 	gef::InputManager* input_manager_;
-	gef::SpriteRenderer* sprite_renderer_;
 	gef::AudioManager* audio_manager_;
+	gef::SpriteRenderer* sprite_renderer_;
 
 	GameState* game_state_;
 	MenuState* menu_state_;

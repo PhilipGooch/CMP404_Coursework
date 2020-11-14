@@ -1,29 +1,21 @@
 #include "Cow.h"
 #include <math.h> // atan2
 
-Cow::Cow(gef::Renderer3D& renderer_3d, PrimitiveBuilder& primitive_builder, std::vector<gef::Material*> materials) :
-	Model(renderer_3d, primitive_builder, materials),
-	scale(1.f),
-	body_half_size(gef::Vector4(12.f, 10.f, 18.f) / scale),
-	head_half_size(gef::Vector4(8.f, 8.f, 6.f) / scale),
-	leg_half_size(gef::Vector4(4.f, 12.f, 4.f) / scale),
-	horn_half_size(gef::Vector4(1.f, 3.f, 1.f) / scale),
-	udders_half_size(gef::Vector4(4.f, 1.f, 6.f) / scale)
+Cow::Cow(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
+	Model(renderer_3d, meshes)
 {
-	
-	body_mesh = primitive_builder_.CreateBoxMesh(body_half_size, gef::Vector4(0.f, 0.f, 0.f), &materials[0]);
-	head_mesh = primitive_builder_.CreateBoxMesh(head_half_size, gef::Vector4(0.f, 0.f, 0.f), &materials[6]);
-	left_leg_mesh = primitive_builder_.CreateBoxMesh(leg_half_size, gef::Vector4(0.f, 0.f, 0.f), &materials[12]);
-	right_leg_mesh = primitive_builder_.CreateBoxMesh(leg_half_size, gef::Vector4(0.f, 0.f, 0.f), &materials[18]);
-	horn_mesh = primitive_builder_.CreateBoxMesh(horn_half_size, gef::Vector4(0.f, 0.f, 0.f), &materials[24]);
-	udders_mesh = primitive_builder_.CreateBoxMesh(udders_half_size, gef::Vector4(0.f, 0.f, 0.f), &materials[30]);
+	body_mesh = meshes[0];
+	head_mesh = meshes[1];
+	left_leg_mesh = meshes[2];
+	right_leg_mesh = meshes[3];
+	horn_mesh = meshes[4];
+	udders_mesh = meshes[5];
 
-	//body_mesh = primitive_builder_.CreateBoxMesh(body_half_size);
-	//head_mesh = primitive_builder_.CreateBoxMesh(head_half_size);
-	//left_leg_mesh = primitive_builder_.CreateBoxMesh(leg_half_size);
-	//right_leg_mesh = primitive_builder_.CreateBoxMesh(leg_half_size);
-	//horn_mesh = primitive_builder_.CreateBoxMesh(horn_half_size);
-	//udders_mesh = primitive_builder_.CreateBoxMesh(udders_half_size);
+	body_half_size = gef::Vector4(12.f, 10.f, 18.f);
+	head_half_size = gef::Vector4(8.f, 8.f, 6.f);
+	leg_half_size = gef::Vector4(4.f, 12.f, 4.f);
+	horn_half_size = gef::Vector4(1.f, 3.f, 1.f);
+	udders_half_size = gef::Vector4(4.f, 1.f, 6.f);
 
 	body_offset = gef::Vector4(0, body_half_size.y() + leg_half_size.y() * 2, 0);
 	head_offset = gef::Vector4(0, body_half_size.y() - head_half_size.y() / 2, body_half_size.z() + head_half_size.z());

@@ -3,9 +3,6 @@
 #include <vector>
 #include "Globals.h" // DELETE
 
-#include <graphics/mesh.h>
-#include <graphics/mesh_instance.h>
-
 class Boid
 {
 public:
@@ -25,6 +22,7 @@ private:
 	float perception_;
 	float max_force_;
 	float max_speed_;
+	float min_speed_;
 	float separation_weight_;
 	float alignment_weight_;
 	float cohesion_weight_;
@@ -33,12 +31,10 @@ private:
 	float flee_radius_;
 
 	
-
+	void Edges();
 	gef::Vector4 Separation(std::vector<Boid*> boids);
 	gef::Vector4 Alignment(std::vector<Boid*> boids);
 	gef::Vector4 Cohesion(std::vector<Boid*> boids);
-
-	void Edges();
 
 	float vDistance(gef::Vector4 a, gef::Vector4 b);
 	float vMagnitudeSquared(gef::Vector4 vector);

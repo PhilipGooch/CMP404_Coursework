@@ -1,9 +1,11 @@
 #include "Model.h"
 
-Model::Model(gef::Renderer3D& renderer_3d, PrimitiveBuilder& primitive_builder, std::vector<gef::Material*> materials) :
-	primitive_builder_(primitive_builder),
-	renderer_3d_(renderer_3d),
-	materials_(materials)
+#include <graphics/mesh_instance.h>
+#include <graphics/renderer_3d.h>
+
+Model::Model(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes) :
+	renderer_3D_(renderer_3D),
+	meshes_(meshes)
 {
 	local_matrix_.SetIdentity();
 	marker_matrix_.SetIdentity();
@@ -74,5 +76,5 @@ void Model::Draw(gef::MeshInstance& mesh_instance)
 	transpose = transpose * local_matrix_ * marker_matrix_;
 
 	mesh_instance.set_transform(transpose);
-	renderer_3d_.DrawMesh(mesh_instance);
+	renderer_3D_->DrawMesh(mesh_instance);
 }

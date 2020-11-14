@@ -1,35 +1,49 @@
 #include "StateMachine.h"
-#include <audio/audio_manager.h>
-#include "MenuState.h"
-#include "GameState.h"
-#include "OptionsState.h"
 
-StateMachine::StateMachine()
+#if VITA_MODE
+#include "GameStateVITA.h"
+#else
+#include "GameStatePC.h"
+#endif
+//#include "MenuState.h"
+//#include "OptionsState.h"
+
+StateMachine::StateMachine(gef::Platform* platform, 
+						   gef::InputManager* input_manager,
+						   gef::AudioManager* audio_manager,
+						   gef::SpriteRenderer* sprite_renderer,
+						   gef::Renderer3D* renderer_3D,
+						   gef::Font* font,
+						   std::vector<gef::Mesh*> meshes)
 {
-	game_state_ = new GameState();
-	menu_state_ = new MenuState();
-	options_state_ = new OptionsState();
+#if VITA_MODE
+	game_state_ = new GameStateVITA(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, meshes);
+#else
+	game_state_ = new GameStatePC(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, meshes);
+#endif
+	//menu_state_ = new MenuState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D);
+	//options_state_ = new OptionsState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D);
 
-	SetState(State::TYPE::MENU);
+	SetState(STATE::GAME);
 }
 
 StateMachine::~StateMachine()
 {
 }
 
-void StateMachine::SetState(State::TYPE type)
+void StateMachine::SetState(STATE type)
 {
 	
 	switch (type)
 	{
-	case State::TYPE::GAME:
+	case STATE::GAME:
 		state_ = game_state_;
 		break;
-	case State::TYPE::MENU:
-		state_ = menu_state_;
+	case STATE::MENU:
+		//state_ = menu_state_;
 		break;
-	case State::TYPE::OPTIONS:
-		state_ = options_state_;
+	case STATE::OPTIONS:
+		//state_ = options_state_;
 		break;
 	}
 

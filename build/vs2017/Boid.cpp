@@ -5,6 +5,7 @@ Boid::Boid() :
 	perception_(100.f),
 	max_force_(50.f),
 	max_speed_(100.f),
+	min_speed_(30.f),
 	separation_weight_(3.f),
 	alignment_weight_(0.7f),
 	cohesion_weight_(1.5f),
@@ -20,7 +21,7 @@ Boid::Boid() :
 	float ax = 0.f;
 	float az = 0.f;
 	position_ = gef::Vector4(x, 0.f, z);
-	velocity_ = gef::Vector4(0, 0.f, 0);
+	velocity_ = gef::Vector4(vx, 0.f, vz);
 	acceleration_ = gef::Vector4(ax, 0.f, az);
 }
 
@@ -28,16 +29,16 @@ void Boid::Flock(std::vector<Boid*> boids, float delta_time)
 {
 	acceleration_ = gef::Vector4(0.f, 0.f, 0.f);
 
-	//Edges();
+	Edges();
 
-	//acceleration_ += Separation(boids) * separation_weight_;
-	//acceleration_ += Alignment(boids) * alignment_weight_;
-	//acceleration_ += Cohesion(boids) * cohesion_weight_;
+	acceleration_ += Separation(boids) * separation_weight_;
+	acceleration_ += Alignment(boids) * alignment_weight_;
+	acceleration_ += Cohesion(boids) * cohesion_weight_;
 	acceleration_ += Flee(boids) * flee_weight_;
 		
 	velocity_ += acceleration_ * delta_time; 
 	//velocity_ = vLimit(velocity_, m_max_speed);
-	//velocity_ = vClamp(velocity_, 20.f, max_speed_);
+	velocity_ = vClamp(velocity_, min_speed_, max_speed_);
 		
 	position_ += velocity_ * delta_time;
 
@@ -45,13 +46,6 @@ void Boid::Flock(std::vector<Boid*> boids, float delta_time)
 
 void Boid::Edges()
 {
-	// edge looping
-	//if (position_.x() < ENVIRONMENT_HALF_WIDTH) position_.set_x(position_.x() + ENVIRONMENT_HALF_WIDTH * 2);
-	//if (position_.x() > ENVIRONMENT_HALF_WIDTH) position_.set_x(position_.x() - ENVIRONMENT_HALF_WIDTH * 2);
-	//if (position_.z() < -ENVIRONMENT_HALF_DEPTH) position_.set_z(position_.z() + ENVIRONMENT_HALF_DEPTH * 2);
-	//if (position_.z() > ENVIRONMENT_HALF_DEPTH) position_.set_z(position_.z() - ENVIRONMENT_HALF_DEPTH * 2);
-
-	// edge avoidance 
 	if (position_.x() < -ENVIRONMENT_HALF_WIDTH + 100)
 	{
 		gef::Vector4 steering = gef::Vector4(max_speed_, 0.f, 0.f);

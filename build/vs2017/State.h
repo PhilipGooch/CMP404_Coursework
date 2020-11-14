@@ -1,24 +1,28 @@
 #pragma once
 
+#include <vector>
+
 namespace gef
 {
 	class Platform;
 	class InputManager;
-	class SpriteRenderer;
 	class AudioManager;
+	class SpriteRenderer;
+	class Renderer3D;
+	class Font;
+	class Mesh;
 }
 
 class State
 {
 public:
-	State();
-
-	enum TYPE
-	{
-		MENU,
-		GAME,
-		OPTIONS
-	};
+	State(gef::Platform* platform, 
+		  gef::InputManager* input_manager, 
+		  gef::AudioManager* audio_manager, 
+		  gef::SpriteRenderer* sprite_renderer,
+		  gef::Renderer3D* renderer_3D,
+		  gef::Font* font,
+		  std::vector<gef::Mesh*> meshes);
 
 	// virtual functions use dynamic dispatch using a v-table.
 	// v-tables map virtual functions to the correct overridden function at runtime.
@@ -30,16 +34,20 @@ public:
 	// abstract classes can not be instantiated.
 	// child classes MUST override these functions or they will also be abstract.
 
-	virtual void HandleInput() = 0;
+	virtual bool HandleInput() = 0;
 	virtual void Update(float delta_time) = 0;
 	virtual void Render() = 0;
 
 protected:
 	gef::Platform* platform_;
 	gef::InputManager* input_manager_;
-	gef::SpriteRenderer* sprite_renderer_;
 	gef::AudioManager* audio_manager_;
+	gef::SpriteRenderer* sprite_renderer_;
+	gef::Renderer3D* renderer_3D_;
+	gef::Font* font_;
 
-	TYPE type_;
+	std::vector<gef::Mesh*> meshes_;
+
+	float fps_;
 };
 

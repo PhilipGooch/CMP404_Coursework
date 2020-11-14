@@ -1,13 +1,11 @@
 
-
 #include "Globals.h"
-
-
 
 #if VITA_MODE
 
 #include <platform/vita/system/platform_vita.h>
-#include "ar_app.h"
+//#include "ar_app.h"
+#include "App.h"
 
 unsigned int sceLibcHeapSize = 128 * 1024 * 1024;	// Sets up the heap area size as 128MiB.
 
@@ -16,11 +14,13 @@ unsigned int sceLibcHeapSize = 128 * 1024 * 1024;	// Sets up the heap area size 
 
 int main(void)
 {
-	// initialisation
 	gef::PlatformVita platform;
 
-	ARApp myApp(platform);
-	myApp.Run();
+	App application(platform);
+	application.Run();
+
+	/*ARApp myApp(platform);
+	myApp.Run();*/
 
 	return 0;
 }
@@ -35,7 +35,6 @@ unsigned int sceLibcHeapSize = 128 * 1024 * 1024;	// Sets up the heap area size 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdshow)
 {
-	// initialisation
 	gef::PlatformD3D11 platform(hInstance, 960, 544, false, true);
 
 	App application(platform);

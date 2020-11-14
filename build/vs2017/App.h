@@ -1,6 +1,7 @@
 #pragma once
 
 #include <system/application.h>
+#include <vector>
 
 namespace gef
 {
@@ -8,9 +9,14 @@ namespace gef
 	class InputManager;
 	class AudioManager;
 	class SpriteRenderer;
+	class Renderer3D;
 	class Font;
+
+	class Material;
+	class Mesh;
 }
 class StateMachine;
+class PrimitiveBuilder;
 
 class App : public gef::Application
 {
@@ -23,14 +29,22 @@ public:
 	void Render() override;
 
 private:
+	gef::Material* LoadMaterial(char* file_name);
+	void LoadMaterials();
+	void CreateMeshes();
 
 	gef::InputManager* input_manager_;
 	gef::AudioManager* audio_manager_;
 	gef::SpriteRenderer* sprite_renderer_;
+	gef::Renderer3D* renderer_3D_;
 	gef::Font* font_;
+	PrimitiveBuilder* primitive_builder_;
 
 	float fps_;
 
 	StateMachine* state_machine_;
+
+	std::vector<gef::Material*> materials_;
+	std::vector<gef::Mesh*> meshes_;
 };
 

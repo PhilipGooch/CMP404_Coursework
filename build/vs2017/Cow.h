@@ -1,17 +1,22 @@
 #pragma once
 #include "Model.h"
+#include <graphics/mesh_instance.h>
+
+namespace gef
+{
+	class Mesh;
+}
 
 class Cow : public Model
 {
 public:
-	Cow(gef::Renderer3D& renderer_3d, PrimitiveBuilder& primitive_builder, std::vector<gef::Material*> materials);
+	Cow(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes);
 
 	void Update(float delta_time);
 	void Animate(float dt);
 	void Render();
 
 protected:
-	float scale;
 
 	gef::Mesh* body_mesh;
 	gef::Mesh* head_mesh;

@@ -1,16 +1,20 @@
 #pragma once
+#include "Boid.h"
+
 #include <maths/matrix44.h>
 #include <vector>
-#include <graphics/mesh.h>
-#include <graphics/mesh_instance.h>
-#include "primitive_builder.h"
-#include <graphics/renderer_3d.h>
-#include "Boid.h"
+
+namespace gef
+{
+	class Renderer3D;
+	class Mesh;
+	class MeshInstance;
+}
 
 class Model : public Boid
 {
 public:
-	Model(gef::Renderer3D& renderer_3d, PrimitiveBuilder& primitive_builder, std::vector<gef::Material*> materials);
+	Model(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes);
 
 	//gef::Matrix44 GetOriginMarker() { return origin_marker_; }
 	gef::Matrix44 GetCurrentMarker() { return local_matrix_; }
@@ -21,13 +25,12 @@ public:
 	gef::Matrix44 local_matrix_;
 	gef::Matrix44 marker_matrix_;
 protected:
-	gef::Renderer3D& renderer_3d_;
-	PrimitiveBuilder& primitive_builder_;
+	gef::Renderer3D* renderer_3D_;
+
+	std::vector<gef::Mesh*> meshes_;
 
 
 	std::vector<gef::Matrix44> matrix_stack_;
-
-	std::vector<gef::Material*> materials_;
 
 	void PushMatrix();
 	void PopMatrix();
