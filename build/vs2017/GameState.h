@@ -21,11 +21,10 @@ public:
 			  gef::SpriteRenderer* sprite_renderer,
 			  gef::Renderer3D* renderer_3D,
 			  gef::Font* font,
+			  StateMachine* state_machine,
 			  std::vector<gef::Mesh*> meshes);
 
-	virtual bool HandleInput() = 0;
-	virtual void Update(float delta_time) = 0;
-	void Render();
+	void Render() override;
 
 protected:
 	void DrawHUD();

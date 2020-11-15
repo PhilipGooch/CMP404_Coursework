@@ -107,7 +107,7 @@ void ARApp::Init()
 	{
 		Cow* cow = (Cow*)boid;
 		cow->local_matrix_.SetIdentity();
-		cow->marker_matrix_ = selected_marker_;
+		//cow->marker_matrix_ = selected_marker_;
 	}
 
 #else
@@ -262,7 +262,7 @@ bool ARApp::HandleInput()
 					for (Boid* boid : cows)
 					{
 						Cow* cow = (Cow*)boid;
-						cow->marker_matrix_ = selected_marker;
+						//cow->marker_matrix_ = selected_marker;
 						cow->local_matrix_ = cow->local_matrix_ * previous_marker * selected_marker_inverse;
 					}
 
@@ -409,7 +409,7 @@ bool ARApp::Update(float delta_time)
 		Cow* cow = (Cow*)boid;
 		if (targeted_marker_ID == selected_marker_ID)
 		{
-			cow->marker_matrix_ = selected_marker_;
+			//cow->marker_matrix_ = selected_marker_;
 			//cow->world_matrix_ = marker_transforms_[selected_marker_ID] * offset;// cow->local_matrix_;
 		}
 		cow->Flock(cows, delta_time);

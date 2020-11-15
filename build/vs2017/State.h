@@ -12,6 +12,7 @@ namespace gef
 	class Font;
 	class Mesh;
 }
+class StateMachine;
 
 class State
 {
@@ -22,6 +23,7 @@ public:
 		  gef::SpriteRenderer* sprite_renderer,
 		  gef::Renderer3D* renderer_3D,
 		  gef::Font* font,
+		  StateMachine* state_machine,
 		  std::vector<gef::Mesh*> meshes);
 
 	// virtual functions use dynamic dispatch using a v-table.
@@ -49,5 +51,7 @@ protected:
 	std::vector<gef::Mesh*> meshes_;
 
 	float fps_;
+
+	StateMachine* state_machine_;
 };
 

@@ -1,4 +1,3 @@
-
 #include "Globals.h"
 
 #if VITA_MODE

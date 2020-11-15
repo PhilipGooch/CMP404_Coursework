@@ -77,6 +77,7 @@ bool App::Update(float delta_time)
 	input_manager_->Update();
 
 	State* state = state_machine_->GetState();
+	if (!state) return false;
 	if (!state->HandleInput()) return false;
 	state->Update(delta_time);
 
@@ -86,6 +87,7 @@ bool App::Update(float delta_time)
 void App::Render()
 {
 	State* state = state_machine_->GetState();
+	if (!state) return;
 	state->Render();
 }
 
@@ -142,86 +144,85 @@ void App::LoadMaterials()
 	materials_.push_back(LoadMaterial("textures/cow/udders/top.png"));			// 34
 	materials_.push_back(LoadMaterial("textures/cow/udders/bottom.png"));		// 35
 
-	// MARKERS
-	//////////////////////////////////////////////////////////////////////////////////
-
-	materials_.push_back(LoadMaterial("textures/markers/1.png"));				// 36
-	materials_.push_back(LoadMaterial("textures/markers/2.png"));				// 37
-	materials_.push_back(LoadMaterial("textures/markers/3.png"));				// 38
-	materials_.push_back(LoadMaterial("textures/markers/4.png"));				// 39
-	materials_.push_back(LoadMaterial("textures/markers/5.png"));				// 40
-	materials_.push_back(LoadMaterial("textures/markers/6.png"));				// 41
-	materials_.push_back(LoadMaterial("textures/markers/s_1.png"));				// 42
-	materials_.push_back(LoadMaterial("textures/markers/s_2.png"));				// 43
-	materials_.push_back(LoadMaterial("textures/markers/s_3.png"));				// 44
-	materials_.push_back(LoadMaterial("textures/markers/s_4.png"));				// 45
-	materials_.push_back(LoadMaterial("textures/markers/s_5.png"));				// 46
-	materials_.push_back(LoadMaterial("textures/markers/s_6.png"));				// 47
-	materials_.push_back(LoadMaterial("textures/markers/t_1.png"));				// 48
-	materials_.push_back(LoadMaterial("textures/markers/t_2.png"));				// 49
-	materials_.push_back(LoadMaterial("textures/markers/t_3.png"));				// 50
-	materials_.push_back(LoadMaterial("textures/markers/t_4.png"));				// 51
-	materials_.push_back(LoadMaterial("textures/markers/t_5.png"));				// 52
-	materials_.push_back(LoadMaterial("textures/markers/t_6.png"));				// 53
-
 	// WOLF
 	//////////////////////////////////////////////////////////////////////////////////
 
-	materials_.push_back(LoadMaterial("textures/WOLF/body/front.png"));			// 54
-	materials_.push_back(LoadMaterial("textures/WOLF/body/back.png"));			// 55
-	materials_.push_back(LoadMaterial("textures/WOLF/body/left.png"));			// 56
-	materials_.push_back(LoadMaterial("textures/WOLF/body/right.png"));			// 57
-	materials_.push_back(LoadMaterial("textures/WOLF/body/top.png"));			// 58
-	materials_.push_back(LoadMaterial("textures/WOLF/body/bottom.png"));		// 59
+	materials_.push_back(LoadMaterial("textures/WOLF/body/front.png"));			// 36
+	materials_.push_back(LoadMaterial("textures/WOLF/body/back.png"));			// 37
+	materials_.push_back(LoadMaterial("textures/WOLF/body/left.png"));			// 38
+	materials_.push_back(LoadMaterial("textures/WOLF/body/right.png"));			// 39
+	materials_.push_back(LoadMaterial("textures/WOLF/body/top.png"));			// 40
+	materials_.push_back(LoadMaterial("textures/WOLF/body/bottom.png"));		// 41
+	materials_.push_back(LoadMaterial("textures/WOLF/mane/front.png"));			// 42
+	materials_.push_back(LoadMaterial("textures/WOLF/mane/back.png"));			// 43
+	materials_.push_back(LoadMaterial("textures/WOLF/mane/left.png"));			// 44
+	materials_.push_back(LoadMaterial("textures/WOLF/mane/right.png"));			// 45
+	materials_.push_back(LoadMaterial("textures/WOLF/mane/top.png"));			// 46
+	materials_.push_back(LoadMaterial("textures/WOLF/mane/bottom.png"));		// 47
+	materials_.push_back(LoadMaterial("textures/WOLF/head/front.png"));			// 48
+	materials_.push_back(LoadMaterial("textures/WOLF/head/back.png"));			// 49
+	materials_.push_back(LoadMaterial("textures/WOLF/head/left.png"));			// 50
+	materials_.push_back(LoadMaterial("textures/WOLF/head/right.png"));			// 51
+	materials_.push_back(LoadMaterial("textures/WOLF/head/top.png"));			// 52
+	materials_.push_back(LoadMaterial("textures/WOLF/head/bottom.png"));		// 53
+	materials_.push_back(LoadMaterial("textures/WOLF/nose/front.png"));			// 54
+	materials_.push_back(LoadMaterial("textures/WOLF/nose/back.png"));			// 55
+	materials_.push_back(LoadMaterial("textures/WOLF/nose/left.png"));			// 56
+	materials_.push_back(LoadMaterial("textures/WOLF/nose/right.png"));			// 57
+	materials_.push_back(LoadMaterial("textures/WOLF/nose/top.png"));			// 58
+	materials_.push_back(LoadMaterial("textures/WOLF/nose/bottom.png"));		// 59
+	materials_.push_back(LoadMaterial("textures/WOLF/legs/front.png"));			// 60
+	materials_.push_back(LoadMaterial("textures/WOLF/legs/back.png"));			// 61
+	materials_.push_back(LoadMaterial("textures/WOLF/legs/left.png"));			// 62
+	materials_.push_back(LoadMaterial("textures/WOLF/legs/right.png"));			// 63
+	materials_.push_back(LoadMaterial("textures/WOLF/legs/top.png"));			// 64
+	materials_.push_back(LoadMaterial("textures/WOLF/legs/bottom.png"));		// 65
+	materials_.push_back(LoadMaterial("textures/WOLF/tail/front.png"));			// 66
+	materials_.push_back(LoadMaterial("textures/WOLF/tail/back.png"));			// 67
+	materials_.push_back(LoadMaterial("textures/WOLF/tail/left.png"));			// 68
+	materials_.push_back(LoadMaterial("textures/WOLF/tail/right.png"));			// 69
+	materials_.push_back(LoadMaterial("textures/WOLF/tail/top.png"));			// 70
+	materials_.push_back(LoadMaterial("textures/WOLF/tail/bottom.png"));		// 71
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/left_front.png"));	// 72
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/left_back.png"));		// 73
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/left.png"));			// 74
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/right.png"));			// 75
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/top.png"));			// 76
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/bottom.png"));		// 77
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/right_front.png"));	// 78
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/right_back.png"));	// 79
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/left.png"));			// 80
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/right.png"));			// 81
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/top.png"));			// 82
+	materials_.push_back(LoadMaterial("textures/WOLF/ears/bottom.png"));		// 83
 
-	materials_.push_back(LoadMaterial("textures/WOLF/mane/front.png"));			// 60
-	materials_.push_back(LoadMaterial("textures/WOLF/mane/back.png"));			// 61
-	materials_.push_back(LoadMaterial("textures/WOLF/mane/left.png"));			// 62
-	materials_.push_back(LoadMaterial("textures/WOLF/mane/right.png"));			// 63
-	materials_.push_back(LoadMaterial("textures/WOLF/mane/top.png"));			// 64
-	materials_.push_back(LoadMaterial("textures/WOLF/mane/bottom.png"));		// 65
+	// MARKERS
+	//////////////////////////////////////////////////////////////////////////////////
 
-	materials_.push_back(LoadMaterial("textures/WOLF/head/front.png"));			// 66
-	materials_.push_back(LoadMaterial("textures/WOLF/head/back.png"));			// 67
-	materials_.push_back(LoadMaterial("textures/WOLF/head/left.png"));			// 68
-	materials_.push_back(LoadMaterial("textures/WOLF/head/right.png"));			// 69
-	materials_.push_back(LoadMaterial("textures/WOLF/head/top.png"));			// 70
-	materials_.push_back(LoadMaterial("textures/WOLF/head/bottom.png"));		// 71
-
-	materials_.push_back(LoadMaterial("textures/WOLF/nose/front.png"));			// 72
-	materials_.push_back(LoadMaterial("textures/WOLF/nose/back.png"));			// 73
-	materials_.push_back(LoadMaterial("textures/WOLF/nose/left.png"));			// 74
-	materials_.push_back(LoadMaterial("textures/WOLF/nose/right.png"));			// 75
-	materials_.push_back(LoadMaterial("textures/WOLF/nose/top.png"));			// 76
-	materials_.push_back(LoadMaterial("textures/WOLF/nose/bottom.png"));		// 77
-
-	materials_.push_back(LoadMaterial("textures/WOLF/legs/front.png"));			// 78
-	materials_.push_back(LoadMaterial("textures/WOLF/legs/back.png"));			// 79
-	materials_.push_back(LoadMaterial("textures/WOLF/legs/left.png"));			// 80
-	materials_.push_back(LoadMaterial("textures/WOLF/legs/right.png"));			// 81
-	materials_.push_back(LoadMaterial("textures/WOLF/legs/top.png"));			// 82
-	materials_.push_back(LoadMaterial("textures/WOLF/legs/bottom.png"));		// 83
-
-	materials_.push_back(LoadMaterial("textures/WOLF/tail/front.png"));			// 84
-	materials_.push_back(LoadMaterial("textures/WOLF/tail/back.png"));			// 85
-	materials_.push_back(LoadMaterial("textures/WOLF/tail/left.png"));			// 86
-	materials_.push_back(LoadMaterial("textures/WOLF/tail/right.png"));			// 87
-	materials_.push_back(LoadMaterial("textures/WOLF/tail/top.png"));			// 88
-	materials_.push_back(LoadMaterial("textures/WOLF/tail/bottom.png"));		// 89
-
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/left_front.png"));	// 90
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/left_back.png"));		// 91
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/left.png"));			// 92
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/right.png"));			// 93
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/top.png"));			// 94
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/bottom.png"));		// 95
-
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/right_front.png"));	// 96
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/right_back.png"));	// 97
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/left.png"));			// 98
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/right.png"));			// 99
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/top.png"));			// 100
-	materials_.push_back(LoadMaterial("textures/WOLF/ears/bottom.png"));		// 101
+	materials_.push_back(LoadMaterial("textures/markers/w_1.png"));				// 84
+	materials_.push_back(LoadMaterial("textures/markers/w_2.png"));				// 85
+	materials_.push_back(LoadMaterial("textures/markers/w_3.png"));				// 86
+	materials_.push_back(LoadMaterial("textures/markers/w_4.png"));				// 87
+	materials_.push_back(LoadMaterial("textures/markers/w_5.png"));				// 88
+	materials_.push_back(LoadMaterial("textures/markers/w_6.png"));				// 89
+	materials_.push_back(LoadMaterial("textures/markers/r_1.png"));				// 90
+	materials_.push_back(LoadMaterial("textures/markers/r_2.png"));				// 91
+	materials_.push_back(LoadMaterial("textures/markers/r_3.png"));				// 92
+	materials_.push_back(LoadMaterial("textures/markers/r_4.png"));				// 93
+	materials_.push_back(LoadMaterial("textures/markers/r_5.png"));				// 94
+	materials_.push_back(LoadMaterial("textures/markers/r_6.png"));				// 95
+	materials_.push_back(LoadMaterial("textures/markers/g_1.png"));				// 96
+	materials_.push_back(LoadMaterial("textures/markers/g_2.png"));				// 97
+	materials_.push_back(LoadMaterial("textures/markers/g_3.png"));				// 98
+	materials_.push_back(LoadMaterial("textures/markers/g_4.png"));				// 99
+	materials_.push_back(LoadMaterial("textures/markers/g_5.png"));				// 100
+	materials_.push_back(LoadMaterial("textures/markers/g_6.png"));				// 101
+	materials_.push_back(LoadMaterial("textures/markers/b_1.png"));				// 102
+	materials_.push_back(LoadMaterial("textures/markers/b_2.png"));				// 103
+	materials_.push_back(LoadMaterial("textures/markers/b_3.png"));				// 104
+	materials_.push_back(LoadMaterial("textures/markers/b_4.png"));				// 105
+	materials_.push_back(LoadMaterial("textures/markers/b_5.png"));				// 106
+	materials_.push_back(LoadMaterial("textures/markers/b_6.png"));				// 107
 
 	// COLOURS
 	//////////////////////////////////////////////////////////////////////////////////
@@ -253,66 +254,80 @@ void App::CreateMeshes()
 	meshes_.push_back(cow_horn);			// 4
 	meshes_.push_back(cow_udders);			// 5
 
-	// MARKERS
-	//////////////////////////////////////////////////////////////////////////////////
-
-	gef::Mesh* _1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[36]);
-	gef::Mesh* _2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[37]);
-	gef::Mesh* _3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[38]);
-	gef::Mesh* _4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[39]);
-	gef::Mesh* _5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[40]);
-	gef::Mesh* _6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[41]);
-	gef::Mesh* s_1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[42]);
-	gef::Mesh* s_2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[43]);
-	gef::Mesh* s_3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[44]);
-	gef::Mesh* s_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[45]);
-	gef::Mesh* s_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[46]);
-	gef::Mesh* s_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[47]);
-	gef::Mesh* t_1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[48]);
-	gef::Mesh* t_2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[49]);
-	gef::Mesh* t_3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[50]);
-	gef::Mesh* t_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[51]);
-	gef::Mesh* t_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[52]);
-	gef::Mesh* t_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[53]);
-
-	meshes_.push_back(_1);					// 6
-	meshes_.push_back(_2);					// 7
-	meshes_.push_back(_3);					// 8
-	meshes_.push_back(_4);					// 9
-	meshes_.push_back(_5);					// 10
-	meshes_.push_back(_6);					// 11
-	meshes_.push_back(s_1);					// 12
-	meshes_.push_back(s_2);					// 13
-	meshes_.push_back(s_3);					// 14
-	meshes_.push_back(s_4);					// 15
-	meshes_.push_back(s_5);					// 16
-	meshes_.push_back(s_6);					// 17
-	meshes_.push_back(t_1);					// 18
-	meshes_.push_back(t_2);					// 19
-	meshes_.push_back(t_3);					// 20
-	meshes_.push_back(t_4);					// 21
-	meshes_.push_back(t_5);					// 22
-	meshes_.push_back(t_6);					// 23
-
 	// WOLF
 	//////////////////////////////////////////////////////////////////////////////////
 
-	gef::Mesh* wolf_body = primitive_builder_->CreateBoxMesh(gef::Vector4(6.f, 6.f, 9.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[54]);
-	gef::Mesh* wolf_mane = primitive_builder_->CreateBoxMesh(gef::Vector4(8.f, 7.f, 6.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[60]);
-	gef::Mesh* wolf_head = primitive_builder_->CreateBoxMesh(gef::Vector4(6.f, 6.f, 4.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[66]);
-	gef::Mesh* wolf_nose = primitive_builder_->CreateBoxMesh(gef::Vector4(3.f, 3.f, 3.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[72]);
-	gef::Mesh* wolf_legs = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 8.f, 2.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[78]);
-	gef::Mesh* wolf_tail = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 8.f, 2.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[84]);
-	gef::Mesh* wolf_left_ear = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 2.f, 1.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[90]);
-	gef::Mesh* wolf_right_ear = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 2.f, 1.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[96]);
+	gef::Mesh* wolf_body = primitive_builder_->CreateBoxMesh(gef::Vector4(6.f, 6.f, 9.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[36]);
+	gef::Mesh* wolf_mane = primitive_builder_->CreateBoxMesh(gef::Vector4(8.f, 7.f, 6.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[42]);
+	gef::Mesh* wolf_head = primitive_builder_->CreateBoxMesh(gef::Vector4(6.f, 6.f, 4.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[48]);
+	gef::Mesh* wolf_nose = primitive_builder_->CreateBoxMesh(gef::Vector4(3.f, 3.f, 3.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[54]);
+	gef::Mesh* wolf_legs = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 8.f, 2.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[60]);
+	gef::Mesh* wolf_tail = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 8.f, 2.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[66]);
+	gef::Mesh* wolf_left_ear = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 2.f, 1.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[72]);
+	gef::Mesh* wolf_right_ear = primitive_builder_->CreateBoxMesh(gef::Vector4(2.f, 2.f, 1.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[78]);
 
-	meshes_.push_back(wolf_body);			// 24
-	meshes_.push_back(wolf_mane);			// 25
-	meshes_.push_back(wolf_head);			// 26
-	meshes_.push_back(wolf_nose);			// 27
-	meshes_.push_back(wolf_legs);			// 28
-	meshes_.push_back(wolf_tail);			// 29
-	meshes_.push_back(wolf_left_ear);		// 30
-	meshes_.push_back(wolf_right_ear);		// 31
+	meshes_.push_back(wolf_body);			// 6
+	meshes_.push_back(wolf_mane);			// 7
+	meshes_.push_back(wolf_head);			// 8
+	meshes_.push_back(wolf_nose);			// 9
+	meshes_.push_back(wolf_legs);			// 10
+	meshes_.push_back(wolf_tail);			// 11
+	meshes_.push_back(wolf_left_ear);		// 12
+	meshes_.push_back(wolf_right_ear);		// 13
+
+	// MARKERS
+	//////////////////////////////////////////////////////////////////////////////////
+
+	gef::Mesh* w_1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[84]);
+	gef::Mesh* w_2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[85]);
+	gef::Mesh* w_3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[86]);
+	gef::Mesh* w_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[87]);
+	gef::Mesh* w_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[88]);
+	gef::Mesh* w_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[89]);
+	gef::Mesh* r_1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[90]);
+	gef::Mesh* r_2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[91]);
+	gef::Mesh* r_3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[92]);
+	gef::Mesh* r_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[93]);
+	gef::Mesh* r_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[94]);
+	gef::Mesh* r_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[95]);
+	gef::Mesh* g_1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[96]);
+	gef::Mesh* g_2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[97]);
+	gef::Mesh* g_3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[98]);
+	gef::Mesh* g_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[99]);
+	gef::Mesh* g_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[100]);
+	gef::Mesh* g_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[101]);
+	gef::Mesh* b_1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[102]);
+	gef::Mesh* b_2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[103]);
+	gef::Mesh* b_3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[104]);
+	gef::Mesh* b_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[105]);
+	gef::Mesh* b_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[106]);
+	gef::Mesh* b_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[107]);
+
+	meshes_.push_back(w_1);					// 14																									
+	meshes_.push_back(w_2);					// 15																										
+	meshes_.push_back(w_3);					// 16																										
+	meshes_.push_back(w_4);					// 17																										
+	meshes_.push_back(w_5);					// 18																										
+	meshes_.push_back(w_6);					// 19
+	meshes_.push_back(r_1);					// 20
+	meshes_.push_back(r_2);					// 21
+	meshes_.push_back(r_3);					// 22
+	meshes_.push_back(r_4);					// 23
+	meshes_.push_back(r_5);					// 24
+	meshes_.push_back(r_6);					// 25
+	meshes_.push_back(g_1);					// 26
+	meshes_.push_back(g_2);					// 27
+	meshes_.push_back(g_3);					// 28
+	meshes_.push_back(g_4);					// 29
+	meshes_.push_back(g_5);					// 30
+	meshes_.push_back(g_6);					// 31
+	meshes_.push_back(b_1);					// 32
+	meshes_.push_back(b_2);					// 33
+	meshes_.push_back(b_3);					// 34
+	meshes_.push_back(b_4);					// 35
+	meshes_.push_back(b_5);					// 36
+	meshes_.push_back(b_6);					// 37
+
+	
 }
 

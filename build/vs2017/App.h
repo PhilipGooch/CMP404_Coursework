@@ -2,6 +2,8 @@
 
 #include <system/application.h>
 #include <vector>
+#include <map>
+#include <string>
 
 namespace gef
 {
@@ -43,6 +45,9 @@ private:
 	float fps_;
 
 	StateMachine* state_machine_;
+
+	std::map<gef::Material*, std::string> materials_map_;
+	std::map<gef::Mesh*, std::string> meshes_map_;
 
 	std::vector<gef::Material*> materials_;
 	std::vector<gef::Mesh*> meshes_;

@@ -65,7 +65,7 @@ GameStateVITA::GameStateVITA(gef::Platform* platform,
 	for (Boid* boid : cows_)
 	{
 		Cow* cow = (Cow*)boid;
-		cow->marker_matrix_ = selected_marker_;
+		//cow->marker_matrix_ = selected_marker_;
 	}
 
 	anchorX = markers_[targeted_marker_ID].GetRow(3).x();
@@ -155,7 +155,7 @@ bool GameStateVITA::HandleInput()
 					for (Boid* boid : cows_)
 					{
 						Cow* cow = (Cow*)boid;
-						cow->marker_matrix_ = selected_marker;
+						//cow->marker_matrix_ = selected_marker;
 						cow->local_matrix_ = cow->local_matrix_ * previous_marker * selected_marker_inverse;
 					}
 
@@ -251,7 +251,7 @@ void GameStateVITA::Update(float delta_time)
 		Cow* cow = (Cow*)boid;
 		if (targeted_marker_ID == selected_marker_ID)
 		{
-			cow->marker_matrix_ = selected_marker_;
+			//cow->marker_matrix_ = selected_marker_;
 		}
 		cow->Flock(cows_, delta_time);
 		cow->Update(delta_time);

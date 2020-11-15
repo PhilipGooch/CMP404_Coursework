@@ -24,10 +24,9 @@ public:
 	void Render();
 
 	gef::Matrix44 world_matrix_;
-	gef::Matrix44 local_matrix_;
 	gef::MeshInstance mesh_instance_;
 	int ID_;
-	bool in_use_;
+	bool occupied_;
 	bool targeted_;
 	bool selected_;
 

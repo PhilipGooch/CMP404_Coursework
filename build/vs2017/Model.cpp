@@ -2,12 +2,12 @@
 
 #include <graphics/mesh_instance.h>
 #include <graphics/renderer_3d.h>
+#include "Marker.h"
 
 Model::Model(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes) :
 	renderer_3D_(renderer_3D)
 {
 	local_matrix_.SetIdentity();
-	marker_matrix_.SetIdentity();
 }
 
 void Model::PushMatrix()
@@ -64,16 +64,16 @@ void Model::Scale(gef::Vector4 scale)
 
 void Model::Draw(gef::MeshInstance& mesh_instance)
 {
-	gef::Matrix44 transpose;
-	transpose.SetIdentity();
+	gef::Matrix44 matrix;
+	matrix.SetIdentity();
 
 	for (int i = matrix_stack_.size() - 1; i >= 0; i--)
 	{
-		transpose = transpose * matrix_stack_[i];
+		matrix = matrix * matrix_stack_[i];
 	}
 
-	transpose = transpose * local_matrix_ * marker_matrix_;
+	matrix = matrix * local_matrix_ * marker_->world_matrix_;
 
-	mesh_instance.set_transform(transpose);
+	mesh_instance.set_transform(matrix);
 	renderer_3D_->DrawMesh(mesh_instance);
 }

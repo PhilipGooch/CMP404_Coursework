@@ -34,14 +34,14 @@ Wolf::Wolf(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	back_right_leg_offset = gef::Vector4(-body_dimensions.x() + legs_dimensions.x(), -body_dimensions.y() - legs_dimensions.y(), -body_dimensions.z() + legs_dimensions.z());
 	tail_offset = gef::Vector4(0.f, -tail_dimensions.y(), -body_dimensions.z());
 
-	body.set_mesh(meshes[24]);
-	mane.set_mesh(meshes[25]);
-	head.set_mesh(meshes[26]);
-	nose.set_mesh(meshes[27]);
-	legs.set_mesh(meshes[28]);
-	tail.set_mesh(meshes[29]);
-	left_ear.set_mesh(meshes[30]);
-	right_ear.set_mesh(meshes[31]);
+	body.set_mesh(meshes[6]);
+	mane.set_mesh(meshes[7]);
+	head.set_mesh(meshes[8]);
+	nose.set_mesh(meshes[9]);
+	legs.set_mesh(meshes[10]);
+	tail.set_mesh(meshes[11]);
+	left_ear.set_mesh(meshes[12]);
+	right_ear.set_mesh(meshes[13]);
 
 	front_left_leg_direction = -1.f;
 	front_right_leg_direction = 1.f;

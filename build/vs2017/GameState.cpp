@@ -15,8 +15,9 @@ GameState::GameState(gef::Platform* platform,
 					 gef::SpriteRenderer* sprite_renderer,
 					 gef::Renderer3D* renderer_3D,
 					 gef::Font* font,
+					 StateMachine* state_machine,
 					 std::vector<gef::Mesh*> meshes) :
-	State(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, meshes)
+	State(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes)
 {
 	SetupLights();
 }
@@ -52,7 +53,7 @@ void GameState::Render()
 void GameState::DrawHUD()
 {
 	gef::Matrix44 proj_matrix2d;
-	proj_matrix2d = platform_->OrthographicFrustum(0.0f, platform_->width(), 0.0f, platform_->height(), -1.0f, 1.0f);
+	proj_matrix2d = platform_->OrthographicFrustum(0.0f, (float)platform_->width(), 0.0f, (float)platform_->height(), -1.0f, 1.0f);
 	sprite_renderer_->set_projection_matrix(proj_matrix2d);
 	sprite_renderer_->Begin(false);
 	if (font_)

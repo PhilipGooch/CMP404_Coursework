@@ -8,12 +8,13 @@ class GameStatePC : public GameState
 {
 public:
 	GameStatePC(gef::Platform* platform,
-		gef::InputManager* input_manager,
-		gef::AudioManager* audio_manager,
-		gef::SpriteRenderer* sprite_renderer,
-		gef::Renderer3D* renderer_3D,
-		gef::Font* font,
-		std::vector<gef::Mesh*> meshes);
+				gef::InputManager* input_manager,
+				gef::AudioManager* audio_manager,
+				gef::SpriteRenderer* sprite_renderer,
+				gef::Renderer3D* renderer_3D,
+				gef::Font* font,
+				StateMachine* state_machine,
+				std::vector<gef::Mesh*> meshes);
 
 	bool HandleInput() override;
 	void Update(float delta_time) override;
