@@ -40,6 +40,7 @@
     <ClCompile Include="primitive_builder.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="Wolf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -55,6 +56,7 @@
     <ClInclude Include="primitive_builder.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="Wolf.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E10EAFBA-8040-483F-BCE8-D31D2545AC1B}</ProjectGuid>

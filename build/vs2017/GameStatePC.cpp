@@ -2,6 +2,7 @@
 
 #include "Boid.h"
 #include "Cow.h"
+#include "Wolf.h"
 #include "Camera.h"
 #include <input/input_manager.h>
 #include <input/keyboard.h>
@@ -20,6 +21,7 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 	GameState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, meshes)
 {
 	camera_ = new Camera(*platform, input_manager);
+	camera_active_ = true;
 
 	number_of_cows_ = 10;
 
@@ -28,11 +30,17 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 		cows_.push_back(new Cow(renderer_3D_, meshes));
 	}
 
+	wolf_ = new Wolf(renderer_3D_, meshes);
+
 	// LIGHTING
 	
+	gef::PointLight default_point_light;
+	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
+	default_point_light.set_position(gef::Vector4(450.f, 100.0f, 250.f));
 	gef::Default3DShaderData& default_shader_data = renderer_3D_->default_shader_data();
-	float light = 0.8f;
+	float light = 0.5f;
 	default_shader_data.set_ambient_light_colour(gef::Colour(light, light, light, 1.0f));
+	//default_shader_data.AddPointLight(default_point_light);
 
 	// MARKERS
 	targeted_marker_ID_ = 0;
@@ -159,7 +167,7 @@ bool GameStatePC::HandleInput()
 				}
 				if (keyboard->IsKeyDown(gef::Keyboard::KC_SPACE))
 				{
-					if (selected_marker_ID_ != targeted_marker_ID_)
+					if (selected_marker_ID_ != targeted_marker_ID_ && targeted_marker_ID_ != 5)
 					{
 						int previous_marker_ID = selected_marker_ID_;
 						selected_marker_ID_ = targeted_marker_ID_;
@@ -179,7 +187,6 @@ bool GameStatePC::HandleInput()
 							cow->marker_matrix_ = selected_marker;
 							cow->local_matrix_ = cow->local_matrix_ * previous_marker * selected_marker_inverse;
 						}
-
 					}
 				}
 			}
@@ -198,14 +205,16 @@ void GameStatePC::Update(float delta_time)
 
 	for (Boid* boid : cows_)
 	{
-		Cow* cow = (Cow*)boid;
-		if (targeted_marker_ID_ == selected_marker_ID_)
+		Cow* cow = (Cow*)boid; 
+		if (targeted_marker_ID_ == selected_marker_ID_ && selected_marker_ID_ != 5)
 		{
 			cow->marker_matrix_ = marker_matrices_[selected_marker_ID_];
 		}
 		cow->Flock(cows_, delta_time);
 		cow->Update(delta_time);
 	}
+
+	wolf_->marker_matrix_ = marker_matrices_[5];
 
 	UpdateMarkers();
 }
@@ -234,6 +243,8 @@ void GameStatePC::Render()
 		Cow* cow = (Cow*)boid;
 		cow->Render();
 	}
+
+	wolf_->Render();
 
 	renderer_3D_->End();
 

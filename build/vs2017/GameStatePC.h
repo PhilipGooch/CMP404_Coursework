@@ -23,8 +23,7 @@ private:
 	void UpdateMarkers() override;
 
 	Camera* camera_;
-
-	bool camera_active_ = false;
+	bool camera_active_;
 
 	float anchorX;
 	float anchorZ;

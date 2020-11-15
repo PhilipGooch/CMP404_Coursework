@@ -4,11 +4,12 @@
 
 #include "Globals.h" // DELETE
 
-#include <maths/matrix44.h>
 #include <vector>
+#include <maths/matrix44.h>
 #include <graphics/mesh_instance.h>
 
 class Boid;
+class Wolf;
 
 class GameState : public State
 {
@@ -42,5 +43,7 @@ protected:
 
 	int number_of_cows_;
 	std::vector<Boid*> cows_;
+
+	Wolf* wolf_;
 };
 

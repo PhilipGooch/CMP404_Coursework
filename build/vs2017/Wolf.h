@@ -7,10 +7,10 @@ namespace gef
 	class Mesh;
 }
 
-class Cow : public Model
+class Wolf : public Model
 {
 public:
-	Cow(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes);
+	Wolf(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes);
 
 	void Update(float delta_time);
 	void Animate(float dt);
@@ -18,29 +18,36 @@ public:
 
 protected:
 	gef::MeshInstance body;
+	gef::MeshInstance mane;
 	gef::MeshInstance head;
-	gef::MeshInstance left_leg;
-	gef::MeshInstance right_leg;
-	gef::MeshInstance horn;
-	gef::MeshInstance udders;
+	gef::MeshInstance nose;
+	gef::MeshInstance legs;
+	gef::MeshInstance tail;
+	gef::MeshInstance left_ear;
+	gef::MeshInstance right_ear;
 
 	gef::Vector4 body_dimensions;
+	gef::Vector4 mane_dimensions;
 	gef::Vector4 head_dimensions;
-	gef::Vector4 leg_dimensions;
-	gef::Vector4 horn_dimensions;
-	gef::Vector4 udders_dimensions;
+	gef::Vector4 nose_dimensions;
+	gef::Vector4 ears_dimensions;
+	gef::Vector4 legs_dimensions;
+	gef::Vector4 tail_dimensions;
 
 	gef::Vector4 body_offset;
+	gef::Vector4 mane_offset;
 	gef::Vector4 head_offset;
+	gef::Vector4 nose_offset;
+	gef::Vector4 left_ear_offset;
+	gef::Vector4 right_ear_offset;
 	gef::Vector4 front_left_leg_offset;
 	gef::Vector4 front_right_leg_offset;
 	gef::Vector4 back_left_leg_offset;
 	gef::Vector4 back_right_leg_offset;
-	gef::Vector4 left_horn_offset;
-	gef::Vector4 right_horn_offset;
-	gef::Vector4 udders_offset;
+	gef::Vector4 tail_offset;
 
 	gef::Vector4 leg_joint_offset;
+	gef::Vector4 tail_joint_offset;
 
 	float front_left_leg_direction;
 	float front_right_leg_direction;
@@ -54,5 +61,7 @@ protected:
 
 	float leg_rotation_speed;
 	float max_leg_rotation;
+
+	float tail_angle;
 };
 

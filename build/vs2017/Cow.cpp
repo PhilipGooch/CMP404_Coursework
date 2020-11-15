@@ -4,35 +4,28 @@
 Cow::Cow(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	Model(renderer_3d, meshes)
 {
-	body_mesh = meshes[0];
-	head_mesh = meshes[1];
-	left_leg_mesh = meshes[2];
-	right_leg_mesh = meshes[3];
-	horn_mesh = meshes[4];
-	udders_mesh = meshes[5];
+	body_dimensions = gef::Vector4(12.f, 10.f, 18.f);
+	head_dimensions = gef::Vector4(8.f, 8.f, 6.f);
+	leg_dimensions = gef::Vector4(4.f, 12.f, 4.f);
+	horn_dimensions = gef::Vector4(1.f, 3.f, 1.f);
+	udders_dimensions = gef::Vector4(4.f, 1.f, 6.f);
 
-	body_half_size = gef::Vector4(12.f, 10.f, 18.f);
-	head_half_size = gef::Vector4(8.f, 8.f, 6.f);
-	leg_half_size = gef::Vector4(4.f, 12.f, 4.f);
-	horn_half_size = gef::Vector4(1.f, 3.f, 1.f);
-	udders_half_size = gef::Vector4(4.f, 1.f, 6.f);
+	body_offset = gef::Vector4(0, body_dimensions.y() + leg_dimensions.y() * 2, 0);
+	head_offset = gef::Vector4(0, body_dimensions.y() - head_dimensions.y() / 2, body_dimensions.z() + head_dimensions.z());
+	front_left_leg_offset = gef::Vector4(body_dimensions.x() - leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), body_dimensions.z() - leg_dimensions.z());
+	back_left_leg_offset = gef::Vector4(body_dimensions.x() - leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), -body_dimensions.z() + leg_dimensions.z());
+	front_right_leg_offset = gef::Vector4(-body_dimensions.x() + leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), body_dimensions.z() - leg_dimensions.z());
+	back_right_leg_offset = gef::Vector4(-body_dimensions.x() + leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), -body_dimensions.z() + leg_dimensions.z());
+	left_horn_offset = gef::Vector4(-head_dimensions.x() - horn_dimensions.x(), head_dimensions.y() - horn_dimensions.z(), horn_dimensions.z());
+	right_horn_offset = gef::Vector4(head_dimensions.x() + horn_dimensions.x(), head_dimensions.y() - horn_dimensions.z(), horn_dimensions.z());
+	udders_offset = gef::Vector4(0, -body_dimensions.y() - udders_dimensions.y(), -body_dimensions.z() + udders_dimensions.z());
 
-	body_offset = gef::Vector4(0, body_half_size.y() + leg_half_size.y() * 2, 0);
-	head_offset = gef::Vector4(0, body_half_size.y() - head_half_size.y() / 2, body_half_size.z() + head_half_size.z());
-	front_left_leg_offset = gef::Vector4(body_half_size.x() - leg_half_size.x(), -body_half_size.y() - leg_half_size.y(), body_half_size.z() - leg_half_size.z());
-	back_left_leg_offset = gef::Vector4(body_half_size.x() - leg_half_size.x(), -body_half_size.y() - leg_half_size.y(), -body_half_size.z() + leg_half_size.z());
-	front_right_leg_offset = gef::Vector4(-body_half_size.x() + leg_half_size.x(), -body_half_size.y() - leg_half_size.y(), body_half_size.z() - leg_half_size.z());
-	back_right_leg_offset = gef::Vector4(-body_half_size.x() + leg_half_size.x(), -body_half_size.y() - leg_half_size.y(), -body_half_size.z() + leg_half_size.z());
-	left_horn_offset = gef::Vector4(-head_half_size.x() - horn_half_size.x(), head_half_size.y() - horn_half_size.z(), horn_half_size.z());
-	right_horn_offset = gef::Vector4(head_half_size.x() + horn_half_size.x(), head_half_size.y() - horn_half_size.z(), horn_half_size.z());
-	udders_offset = gef::Vector4(0, -body_half_size.y() - udders_half_size.y(), -body_half_size.z() + udders_half_size.z());
-
-	body.set_mesh(body_mesh);
-	head.set_mesh(head_mesh);
-	left_leg.set_mesh(left_leg_mesh);
-	right_leg.set_mesh(right_leg_mesh);
-	horn.set_mesh(horn_mesh);
-	udders.set_mesh(udders_mesh);
+	body.set_mesh(meshes[0]);
+	head.set_mesh(meshes[1]);
+	left_leg.set_mesh(meshes[2]);
+	right_leg.set_mesh(meshes[3]);
+	horn.set_mesh(meshes[4]);
+	udders.set_mesh(meshes[5]);
 
 	front_left_leg_direction = -1.f;
 	front_right_leg_direction = 1.f;
@@ -47,7 +40,7 @@ Cow::Cow(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	leg_rotation_speed = 3.f;
 	max_leg_rotation = 3.142f / 4;
 
-	leg_joint_offset = gef::Vector4(0.f, leg_half_size.y(), 0.f);
+	leg_joint_offset = gef::Vector4(0.f, leg_dimensions.y(), 0.f);
 }
 
 void Cow::Update(float delta_time)
@@ -60,13 +53,16 @@ void Cow::Animate(float delta_time)
 	float* leg_angles[4] { &front_left_leg_angle, &front_right_leg_angle, &back_left_leg_angle, &back_right_leg_angle };
 	float* leg_directions[4] { &front_left_leg_direction, &front_right_leg_direction, &back_left_leg_direction, &back_right_leg_direction };
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) 
+	{
 		*leg_angles[i] += *leg_directions[i] * leg_rotation_speed * delta_time;
-		if (*leg_angles[i] > max_leg_rotation) {
+		if (*leg_angles[i] > max_leg_rotation) 
+		{
 			*leg_angles[i] = max_leg_rotation;
 			*leg_directions[i] = -*leg_directions[i];
 		}
-		if (*leg_angles[i] < -max_leg_rotation) {
+		if (*leg_angles[i] < -max_leg_rotation) 
+		{
 			*leg_angles[i] = -max_leg_rotation;
 			*leg_directions[i] = -*leg_directions[i];
 		}
@@ -82,7 +78,7 @@ void Cow::Render()
 #endif
 		Translate(position_);
 		Translate(body_offset);
-		RotateY(-atan2f(velocity_.z(), velocity_.x()) + (3.1415f / 2));	// refactor...
+		RotateY(-atan2f(velocity_.z(), velocity_.x()) + (3.1415f / 2));	// direction vector
 		Draw(body);
 		PushMatrix();
 			Translate(head_offset);
