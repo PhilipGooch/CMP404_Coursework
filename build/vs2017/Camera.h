@@ -19,10 +19,7 @@ public:
 	void HandleInput();
 	void Update(float delta_time);
 
-
-
 public:
-
 	gef::Platform& platform_;
 	gef::InputManager* input_manager_;
 
@@ -40,8 +37,9 @@ public:
 	float near_plane_;
 	float far_plane_;
 
-	bool moving_forward, moving_back, moving_up, moving_down, moving_left, moving_right;
-	bool looking_up, looking_down, looking_left, looking_right;
+	bool active_;
+	bool moving_forward_, moving_back_, moving_up_, moving_down_, moving_left_, moving_right_;
+	bool looking_up_, looking_down_, looking_left_, looking_right_;
 
 	gef::Matrix44 projection_matrix_;
 	gef::Matrix44 view_matrix_;

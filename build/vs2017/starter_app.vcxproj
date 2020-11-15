@@ -36,6 +36,7 @@
     <ClCompile Include="GameStatePC.cpp" />
     <ClCompile Include="GameStateVITA.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Marker.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="primitive_builder.cpp" />
     <ClCompile Include="State.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="GameStatePC.h" />
     <ClInclude Include="GameStateVITA.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Marker.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="primitive_builder.h" />
     <ClInclude Include="State.h" />

@@ -9,8 +9,7 @@
 Camera::Camera(gef::Platform& platform, gef::InputManager* input_manager) :
 	platform_(platform),
 	input_manager_(input_manager),
-	//eye_(gef::Vector4(0, 1300.0f, ENVIRONMENT_HALF_DEPTH * 4 + 300.f)),
-	eye_(gef::Vector4(400.f, 50.0f, 700.f)),
+	eye_(gef::Vector4(0, 1300.0f, ENVIRONMENT_HALF_DEPTH * 4 + 300.f)),
 	look_at_(gef::Vector4(0.0f, 0.0f, 0.0f)),
 	up_(gef::Vector4(0.0f, 1.0f, 0.0f)),
 	camera_fov_(gef::DegToRad(25.0f)),
@@ -18,12 +17,10 @@ Camera::Camera(gef::Platform& platform, gef::InputManager* input_manager) :
 	far_plane_(10000.f),
 	roll_(0.f),
 	yaw_(0.f),
-	//pitch_(-45.f),
-	//rotateSpeed(52.f),
-	//speed_(1000.f)
-	pitch_(0.f),
-	rotateSpeed(62.f),
-	speed_(200.f)
+	pitch_(-45.f),
+	rotateSpeed(52.f),
+	speed_(1000.f),
+	active_(false)
 {
 }
 
@@ -51,34 +48,34 @@ void Camera::HandleInput() {
 		gef::Keyboard* keyboard = input_manager_->keyboard();
 		if (keyboard)
 		{
-			moving_forward = keyboard->IsKeyDown(gef::Keyboard::KC_W);
-			moving_back = keyboard->IsKeyDown(gef::Keyboard::KC_S);
-			moving_left = keyboard->IsKeyDown(gef::Keyboard::KC_A);
-			moving_right = keyboard->IsKeyDown(gef::Keyboard::KC_D);
-			moving_up = keyboard->IsKeyDown(gef::Keyboard::KC_E);
-			moving_down = keyboard->IsKeyDown(gef::Keyboard::KC_Q);
+			moving_forward_ = keyboard->IsKeyDown(gef::Keyboard::KC_W);
+			moving_back_ = keyboard->IsKeyDown(gef::Keyboard::KC_S);
+			moving_left_ = keyboard->IsKeyDown(gef::Keyboard::KC_A);
+			moving_right_ = keyboard->IsKeyDown(gef::Keyboard::KC_D);
+			moving_up_ = keyboard->IsKeyDown(gef::Keyboard::KC_E);
+			moving_down_ = keyboard->IsKeyDown(gef::Keyboard::KC_Q);
 
-			looking_up = keyboard->IsKeyDown(gef::Keyboard::KC_UP);
-			looking_down = keyboard->IsKeyDown(gef::Keyboard::KC_DOWN);
-			looking_left = keyboard->IsKeyDown(gef::Keyboard::KC_LEFT);
-			looking_right = keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT);
+			looking_up_ = keyboard->IsKeyDown(gef::Keyboard::KC_UP);
+			looking_down_ = keyboard->IsKeyDown(gef::Keyboard::KC_DOWN);
+			looking_left_ = keyboard->IsKeyDown(gef::Keyboard::KC_LEFT);
+			looking_right_ = keyboard->IsKeyDown(gef::Keyboard::KC_RIGHT);
 		}
 	}
 }
 
 void Camera::Update(float delta_time)
 {
-	if (moving_forward) eye_ += forward_ * speed_ * delta_time;
-	if (moving_back) eye_ -= forward_ * speed_ * delta_time;
-	if (moving_left) eye_ -= right_ * speed_ * delta_time;
-	if (moving_right) eye_ += right_ * speed_ * delta_time;
-	if (moving_up) eye_ += up_ * speed_ * delta_time;
-	if (moving_down) eye_ -= up_ * speed_ * delta_time;
+	if (moving_forward_) eye_ += forward_ * speed_ * delta_time;
+	if (moving_back_) eye_ -= forward_ * speed_ * delta_time;
+	if (moving_left_) eye_ -= right_ * speed_ * delta_time;
+	if (moving_right_) eye_ += right_ * speed_ * delta_time;
+	if (moving_up_) eye_ += up_ * speed_ * delta_time;
+	if (moving_down_) eye_ -= up_ * speed_ * delta_time;
 
-	if (looking_up) pitch_ += rotateSpeed * delta_time;
-	if (looking_down) pitch_ -= rotateSpeed * delta_time;
-	if (looking_left) yaw_ -= rotateSpeed * delta_time;
-	if (looking_right) yaw_ += rotateSpeed * delta_time;
+	if (looking_up_) pitch_ += rotateSpeed * delta_time;
+	if (looking_down_) pitch_ -= rotateSpeed * delta_time;
+	if (looking_left_) yaw_ -= rotateSpeed * delta_time;
+	if (looking_right_) yaw_ += rotateSpeed * delta_time;
 
 	if (pitch_ > 90) pitch_ = 90;
 	if (pitch_ < -90) pitch_ = -90;

@@ -1,0 +1,19 @@
+when switching between states, do i have to clean up anything? worth destroying state and re-initializing?
+
+boid boundary should move with markers?
+
+reduce calls to marker tracking functions
+
+create primitive model class for groups of fixed primitives? like head? reduced matrix maths per frame
+
+basic menu state
+
+options state with flocking variables
+
+create marker class
+
+no need to cast animals to boid because of pure virtual functions?
+
+model and marker should have world, local, and parent transformation matrices? maybe just local and parent?
+
+change material and mesh vector to map?

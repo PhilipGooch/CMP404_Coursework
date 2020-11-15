@@ -10,6 +10,7 @@
 
 class Boid;
 class Wolf;
+class Marker;
 
 class GameState : public State
 {
@@ -24,26 +25,24 @@ public:
 
 	virtual bool HandleInput() = 0;
 	virtual void Update(float delta_time) = 0;
-	virtual void Render() = 0;
+	void Render();
 
 protected:
-	virtual void UpdateMarkers() = 0;
+	void DrawHUD();
+	void SetupLights();
 
 	gef::Matrix44 projection_matrix_;
 	gef::Matrix44 view_matrix_;
 
-	gef::Matrix44 marker_matrices_[6];
-	gef::MeshInstance marker_mesh_instances_[6];
-
-	int selected_marker_ID_;
-	int targeted_marker_ID_;
-
-	gef::MeshInstance selected_marker_mesh_instance_;
-	gef::MeshInstance targeted_marker_mesh_instance_;
+	int number_of_markers_;
+	std::vector<Marker*> markers_;
+	Marker* selected_marker_;
+	Marker* targeted_marker_;
 
 	int number_of_cows_;
 	std::vector<Boid*> cows_;
 
-	Wolf* wolf_;
+	int number_of_wolves_;
+	std::vector<Boid*> wolves_;
 };
 

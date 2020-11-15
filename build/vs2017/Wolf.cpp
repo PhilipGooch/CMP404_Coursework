@@ -97,10 +97,9 @@ void Wolf::Render()
 		Scale(gef::Vector4(0.001f, 0.001f, 0.001f, 1.f)); // scale down to sony unit sizes
 		RotateX(3.141592 / 2); // rotate to sony coordinate system
 #endif
-		//Translate(position_);
+		Translate(position_);
 		Translate(body_offset);
-		RotateY(3.141592f);
-		//RotateY(-atan2f(velocity_.z(), velocity_.x()) + (3.1415f / 2));	// direction vector
+		RotateY(-atan2f(velocity_.z(), velocity_.x()) + (3.1415f / 2));	// direction vector
 		Draw(body);
 		PushMatrix();
 		{
@@ -136,7 +135,7 @@ void Wolf::Render()
 		{
 			Translate(front_left_leg_offset);
 			Translate(leg_joint_offset);
-			RotateX(back_right_leg_angle);
+			RotateX(front_left_leg_angle);
 			Translate(-leg_joint_offset);
 			Draw(legs);
 		}
@@ -145,7 +144,7 @@ void Wolf::Render()
 		{
 			Translate(front_right_leg_offset);
 			Translate(leg_joint_offset);
-			RotateX(back_right_leg_angle);
+			RotateX(front_right_leg_angle);
 			Translate(-leg_joint_offset);
 			Draw(legs);
 		}
@@ -154,7 +153,7 @@ void Wolf::Render()
 		{
 			Translate(back_left_leg_offset);
 			Translate(leg_joint_offset);
-			RotateX(back_right_leg_angle);
+			RotateX(back_left_leg_angle);
 			Translate(-leg_joint_offset);
 			Draw(legs);
 		}

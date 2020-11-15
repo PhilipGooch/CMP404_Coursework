@@ -4,8 +4,7 @@
 #include <graphics/renderer_3d.h>
 
 Model::Model(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes) :
-	renderer_3D_(renderer_3D),
-	meshes_(meshes)
+	renderer_3D_(renderer_3D)
 {
 	local_matrix_.SetIdentity();
 	marker_matrix_.SetIdentity();

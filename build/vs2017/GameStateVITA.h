@@ -15,10 +15,8 @@ public:
 
 	bool HandleInput() override;
 	void Update(float delta_time) override;
-	void Render() override;
 
 private:
-	void UpdateMarkers() override;
 
 	gef::Matrix44 projection_matrix_;
 	gef::Matrix44 view_matrix_;
