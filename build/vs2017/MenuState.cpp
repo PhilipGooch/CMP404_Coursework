@@ -7,6 +7,7 @@
 #include <input/input_manager.h>
 #include <input/keyboard.h>
 #include "StateMachine.h"
+#include "Cow.h"
 
 MenuState::MenuState(gef::Platform* platform, 
 					 gef::InputManager* input_manager, 
@@ -26,6 +27,8 @@ MenuState::MenuState(gef::Platform* platform,
 	view_matrix_.SetIdentity();
 
 	SetupLights();
+
+	cow = new Cow(renderer_3D, meshes);
 }
 
 bool MenuState::HandleInput()
@@ -56,6 +59,8 @@ bool MenuState::HandleInput()
 void MenuState::Update(float delta_time)
 {
 	fps_ = 1.f / delta_time;
+
+	cow->Update(delta_time);
 }
 
 void MenuState::Render()
@@ -63,6 +68,8 @@ void MenuState::Render()
 	renderer_3D_->set_projection_matrix(projection_matrix_);
 	renderer_3D_->set_view_matrix(view_matrix_);
 	renderer_3D_->Begin(true);
+
+	cow->Render();
 
 	renderer_3D_->End();
 

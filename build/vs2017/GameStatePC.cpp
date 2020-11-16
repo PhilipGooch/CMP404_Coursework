@@ -55,27 +55,29 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 		world_matrix.SetIdentity();
 		world_matrix.SetTranslation(marker_translations[i]);
 		markers_.push_back(new Marker(renderer_3D, meshes, world_matrix, i));
-	}
+	}	
 
-	selected_marker_ = markers_[0];
 	targeted_marker_ = markers_[0];
-
-	selected_marker_->selected_ = true;
-	selected_marker_->targeted_ = true;
-	selected_marker_->occupied_ = true;
-
+	selected_marker_ = targeted_marker_;
+	
+	cow_marker_ = markers_[0];
+	cow_marker_->anchor_ = Marker::ANCHOR::COW;
+	cow_marker_->boids_ = &cows_;
+	cow_marker_->targeted_ = true;
 	for (Boid* boid : cows_)
 	{
 		Cow* cow = (Cow*)boid;
-		cow->marker_ = selected_marker_;
+		cow->marker_matrix_ = cow_marker_->world_matrix_;
 	}
 
+	wolf_marker_ = markers_[5];
+	wolf_marker_->anchor_ = Marker::ANCHOR::WOLF;
+	wolf_marker_->boids_ = &wolves_;
 	for (Boid* boid : wolves_)
 	{
 		Wolf* wolf = (Wolf*)boid;
-		wolf->marker_ = markers_[5];
+		wolf->marker_matrix_ = markers_[5]->world_matrix_;
 	}
-	markers_[5]->occupied_ = true;
 }
 
 bool GameStatePC::HandleInput()
@@ -155,21 +157,19 @@ bool GameStatePC::HandleInput()
 				}
 				if (keyboard->IsKeyDown(gef::Keyboard::KC_SPACE))
 				{
-					if (!targeted_marker_->selected_ && !targeted_marker_->occupied_)
+					if (targeted_marker_->anchor_ == Marker::ANCHOR::NONE)
 					{
-						Marker* previous_marker = selected_marker_; 
+						gef::Matrix44 previous_marker_matrix = selected_marker_->world_matrix_;
 
-						SwapSelectedMarker();
-
+						SwapMarker();
 
 						gef::Matrix44 selected_marker_inverse_world_matrix;
 						selected_marker_inverse_world_matrix.AffineInverse(selected_marker_->world_matrix_);
 
 						for (Boid* boid : cows_)
 						{
-							Cow* cow = (Cow*)boid;
-							cow->marker_ = selected_marker_;
-							cow->local_matrix_ = cow->local_matrix_ * previous_marker->world_matrix_ * selected_marker_inverse_world_matrix;
+							boid->marker_matrix_ = selected_marker_->world_matrix_;
+							boid->local_matrix_ = boid->local_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
 						}
 
 						//for (Boid* boid : wolves_)
@@ -202,6 +202,7 @@ void GameStatePC::Update(float delta_time)
 	for (Boid* boid : cows_)
 	{
 		Cow* cow = (Cow*)boid; 
+		cow->marker_matrix_ = selected_marker_->world_matrix_;
 		cow->Flock(cows_, delta_time);
 		cow->Update(delta_time);
 	}
@@ -209,6 +210,7 @@ void GameStatePC::Update(float delta_time)
 	for (Boid* boid : wolves_)
 	{
 		Wolf* wolf = (Wolf*)boid;
+		wolf->marker_matrix_ = markers_[5]->world_matrix_;
 		wolf->Flock(wolves_, delta_time);
 		wolf->Update(delta_time);
 	}
@@ -237,12 +239,22 @@ void GameStatePC::SwapTargetMarker(int target)
 	targeted_marker_->targeted_ = true;
 }
 
-void GameStatePC::SwapSelectedMarker()
+void GameStatePC::SwapMarker()
 {
-	selected_marker_->selected_ = false;
-	selected_marker_->occupied_ = false;
+	Marker::ANCHOR previous_anchor = selected_marker_->anchor_;
+	std::vector<Boid*>* previous_boids = selected_marker_->boids_;
+	selected_marker_->anchor_ = Marker::ANCHOR::NONE;
+	selected_marker_->boids_ = nullptr;
 	selected_marker_ = targeted_marker_;
-	selected_marker_->selected_ = true;
+	selected_marker_->anchor_ = previous_anchor;
+	selected_marker_->boids_ = previous_boids;
 }
 
-
+//
+//selected_marker_->selected_ = false;
+//selected_marker_->occupied_ = false;
+//Marker previous_marker = *selected_marker_;
+//selected_marker_->anchor_ = Marker::ANCHOR::NONE;
+//selected_marker_ = targeted_marker_;
+//selected_marker_->selected_ = true;
+//selected_marker_->anchor_ = previous_marker.anchor_;

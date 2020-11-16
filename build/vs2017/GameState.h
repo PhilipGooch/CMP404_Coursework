@@ -35,8 +35,10 @@ protected:
 
 	int number_of_markers_;
 	std::vector<Marker*> markers_;
-	Marker* selected_marker_;
+	Marker* cow_marker_;
+	Marker* wolf_marker_;
 	Marker* targeted_marker_;
+	Marker* selected_marker_;
 
 	int number_of_cows_;
 	std::vector<Boid*> cows_;

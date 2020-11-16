@@ -10,12 +10,20 @@ namespace gef
 	class Mesh;
 	class MeshInstance;
 }
+class Boid;
 
 class Marker
 {
 public:
 	Marker(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes, gef::Matrix44 world_matrix, int ID);
 	~Marker();
+
+	enum ANCHOR
+	{
+		NONE,
+		COW,
+		WOLF
+	};
 
 	void SetWorldMatrix(gef::Matrix44 world_matrix) { world_matrix_ = world_matrix; }
 	void SetWorldMatrix(gef::Vector4 translation) { world_matrix_.SetTranslation(translation); }
@@ -26,9 +34,12 @@ public:
 	gef::Matrix44 world_matrix_;
 	gef::MeshInstance mesh_instance_;
 	int ID_;
-	bool occupied_;
+	//bool occupied_;
+	ANCHOR anchor_;
 	bool targeted_;
-	bool selected_;
+	//bool selected_;
+
+	std::vector<Boid*>* boids_;
 
 	float angle_;	// only used on PC
 private:

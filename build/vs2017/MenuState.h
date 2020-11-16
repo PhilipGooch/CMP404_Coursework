@@ -4,6 +4,8 @@
 
 #include <maths/matrix44.h>
 
+class Cow;
+
 class MenuState : public State
 {
 public:
@@ -27,5 +29,7 @@ public:
 private:
 	gef::Matrix44 projection_matrix_;
 	gef::Matrix44 view_matrix_;
+
+	Cow* cow;
 };
 

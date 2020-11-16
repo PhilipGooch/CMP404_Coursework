@@ -72,7 +72,7 @@ void Model::Draw(gef::MeshInstance& mesh_instance)
 		matrix = matrix * matrix_stack_[i];
 	}
 
-	matrix = matrix * local_matrix_ * marker_->world_matrix_;
+	matrix = matrix * local_matrix_ * marker_matrix_;
 
 	mesh_instance.set_transform(matrix);
 	renderer_3D_->DrawMesh(mesh_instance);

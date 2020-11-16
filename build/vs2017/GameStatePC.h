@@ -23,7 +23,7 @@ private:
 	void MoveMarker(gef::Vector4 velocity);
 	void RotateMarker(float delta_angle);
 	void SwapTargetMarker(int target);
-	void SwapSelectedMarker();
+	void SwapMarker();
 
 	Camera* camera_;
 

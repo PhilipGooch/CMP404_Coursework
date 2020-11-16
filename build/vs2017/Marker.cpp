@@ -6,9 +6,11 @@ Marker::Marker(gef::Renderer3D * renderer_3D, std::vector<gef::Mesh*> meshes, ge
 	meshes_(meshes),
 	world_matrix_(world_matrix),
 	ID_(ID),
-	occupied_(false),
+	//occupied_(false),
+	anchor_(ANCHOR::NONE),
+	boids_(nullptr),
 	targeted_(false),
-	selected_(false),
+	//selected_(false),
 	angle_(0.f)
 {
 	Update();
@@ -20,12 +22,12 @@ Marker::~Marker()
 
 void Marker::Update()
 {
-	if (selected_)
+	
+	if (anchor_ == ANCHOR::COW)
 	{
 		mesh_instance_.set_mesh(meshes_[20 + ID_]);
 	}
-	
-	else if (occupied_)
+	else if (anchor_ == ANCHOR::WOLF)
 	{
 		mesh_instance_.set_mesh(meshes_[32 + ID_]);
 	}

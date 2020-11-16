@@ -1,6 +1,7 @@
 #pragma once
 #include <maths/Vector4.h>
 #include <vector>
+#include <maths/matrix44.h>
 #include "Globals.h" // DELETE
 
 class Boid
@@ -11,6 +12,9 @@ public:
 	void Flock(std::vector<Boid*> boids, float delta_time);
 	gef::Vector4 Flee(std::vector<Boid*> boids);
 	void SetPredatorLocalTransform(gef::Vector4 predator);
+
+	gef::Matrix44 local_matrix_;
+	gef::Matrix44 marker_matrix_;
 
 	gef::Vector4 predator_;
 protected:
