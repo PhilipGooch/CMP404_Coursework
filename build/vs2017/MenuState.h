@@ -5,6 +5,7 @@
 #include <maths/matrix44.h>
 
 class Cow;
+class Camera;
 
 class MenuState : public State
 {
@@ -17,6 +18,7 @@ public:
 			  gef::Font* font,
 			  StateMachine* state_machine,
 			  std::vector<gef::Mesh*> meshes);
+	~MenuState();
 
 	bool HandleInput() override;
 	void Update(float delta_time) override;
@@ -30,6 +32,8 @@ private:
 	gef::Matrix44 projection_matrix_;
 	gef::Matrix44 view_matrix_;
 
-	Cow* cow;
+	Camera* camera_;
+
+	Cow* cow_;
 };
 

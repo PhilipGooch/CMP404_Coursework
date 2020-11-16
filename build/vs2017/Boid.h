@@ -13,12 +13,9 @@ public:
 	gef::Vector4 Flee(std::vector<Boid*> boids);
 	void SetPredatorLocalTransform(gef::Vector4 predator);
 
-	gef::Matrix44 local_matrix_;
-	gef::Matrix44 marker_matrix_;
-
 	gef::Vector4 predator_;
-protected:
 	gef::Vector4 position_;
+protected:
 	gef::Vector4 velocity_;
 	gef::Vector4 acceleration_;
 

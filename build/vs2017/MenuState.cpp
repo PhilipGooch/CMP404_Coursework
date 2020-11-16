@@ -20,7 +20,7 @@ MenuState::MenuState(gef::Platform* platform,
 	State(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes)
 {
 	float aspect_ratio = (float)platform_->width() / (float)platform_->height();
-	float field_of_view = 0.436332f;
+	float field_of_view = 3.141592f / 4;
 	float near_plane_ = 0.01f;
 	float far_plane_ = 1000.f;
 	projection_matrix_ = platform_->PerspectiveProjectionFov(field_of_view, aspect_ratio, near_plane_, far_plane_);
@@ -28,7 +28,12 @@ MenuState::MenuState(gef::Platform* platform,
 
 	SetupLights();
 
-	cow = new Cow(renderer_3D, meshes);
+	cow_ = new Cow(renderer_3D, meshes);
+	gef::Matrix44 cow_matrix;
+	cow_matrix.SetIdentity();
+	cow_matrix.SetTranslation(gef::Vector4(0.f, 0.f, -100.f));
+	cow_->position_ = gef::Vector4(0.f, 0.f, 0.f);
+	cow_->marker_matrix_ = cow_matrix;
 }
 
 bool MenuState::HandleInput()
@@ -60,7 +65,7 @@ void MenuState::Update(float delta_time)
 {
 	fps_ = 1.f / delta_time;
 
-	cow->Update(delta_time);
+	cow_->Update(delta_time);
 }
 
 void MenuState::Render()
@@ -69,7 +74,7 @@ void MenuState::Render()
 	renderer_3D_->set_view_matrix(view_matrix_);
 	renderer_3D_->Begin(true);
 
-	cow->Render();
+	cow_->Render();
 
 	renderer_3D_->End();
 

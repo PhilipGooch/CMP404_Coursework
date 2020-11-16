@@ -25,7 +25,7 @@ StateMachine::StateMachine(gef::Platform* platform,
 	menu_state_ = new MenuState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, this, meshes);
 	options_state_ = new OptionsState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, this, meshes);
 
-	SetState(STATE::GAME); 
+	SetState(STATE::MENU); 
 }
 
 StateMachine::~StateMachine()

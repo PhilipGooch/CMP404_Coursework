@@ -7,7 +7,7 @@ Marker::Marker(gef::Renderer3D * renderer_3D, std::vector<gef::Mesh*> meshes, ge
 	world_matrix_(world_matrix),
 	ID_(ID),
 	//occupied_(false),
-	anchor_(ANCHOR::NONE),
+	child_(CHILD::NONE),
 	boids_(nullptr),
 	targeted_(false),
 	//selected_(false),
@@ -23,11 +23,11 @@ Marker::~Marker()
 void Marker::Update()
 {
 	
-	if (anchor_ == ANCHOR::COW)
+	if (child_ == CHILD::COW)
 	{
 		mesh_instance_.set_mesh(meshes_[20 + ID_]);
 	}
-	else if (anchor_ == ANCHOR::WOLF)
+	else if (child_ == CHILD::WOLF)
 	{
 		mesh_instance_.set_mesh(meshes_[32 + ID_]);
 	}

@@ -18,7 +18,7 @@ public:
 	Marker(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes, gef::Matrix44 world_matrix, int ID);
 	~Marker();
 
-	enum ANCHOR
+	enum CHILD	// cant think of a better name... the boid system or game object associated with the marker.
 	{
 		NONE,
 		COW,
@@ -34,10 +34,9 @@ public:
 	gef::Matrix44 world_matrix_;
 	gef::MeshInstance mesh_instance_;
 	int ID_;
-	//bool occupied_;
-	ANCHOR anchor_;
 	bool targeted_;
-	//bool selected_;
+
+	CHILD child_;
 
 	std::vector<Boid*>* boids_;
 

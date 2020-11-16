@@ -24,6 +24,8 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 	GameState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes)
 {
 	camera_ = new Camera(*platform, input_manager);
+	camera_->eye_ = gef::Vector4(0, 1300.0f, 1300.f);
+	camera_->look_at_ = gef::Vector4(0.f, 0.f, 0.f);
 
 	number_of_cows_ = 4;
 	number_of_wolves_ = 4;
@@ -61,17 +63,17 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 	selected_marker_ = targeted_marker_;
 	
 	cow_marker_ = markers_[0];
-	cow_marker_->anchor_ = Marker::ANCHOR::COW;
+	cow_marker_->child_ = Marker::CHILD::COW;
 	cow_marker_->boids_ = &cows_;
 	cow_marker_->targeted_ = true;
 	for (Boid* boid : cows_)
 	{
 		Cow* cow = (Cow*)boid;
-		cow->marker_matrix_ = cow_marker_->world_matrix_;
+		cow->marker_matrix_ = markers_[0]->world_matrix_;
 	}
 
 	wolf_marker_ = markers_[5];
-	wolf_marker_->anchor_ = Marker::ANCHOR::WOLF;
+	wolf_marker_->child_ = Marker::CHILD::WOLF;
 	wolf_marker_->boids_ = &wolves_;
 	for (Boid* boid : wolves_)
 	{
@@ -157,7 +159,7 @@ bool GameStatePC::HandleInput()
 				}
 				if (keyboard->IsKeyDown(gef::Keyboard::KC_SPACE))
 				{
-					if (targeted_marker_->anchor_ == Marker::ANCHOR::NONE)
+					if (targeted_marker_->child_ == Marker::CHILD::NONE)
 					{
 						gef::Matrix44 previous_marker_matrix = selected_marker_->world_matrix_;
 
@@ -168,17 +170,12 @@ bool GameStatePC::HandleInput()
 
 						for (Boid* boid : cows_)
 						{
-							boid->marker_matrix_ = selected_marker_->world_matrix_;
-							boid->local_matrix_ = boid->local_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
+							Cow* cow = (Cow*)boid;
+							cow->marker_matrix_ = selected_marker_->world_matrix_;
+							cow->local_matrix_ = cow->local_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
 						}
-
-						//for (Boid* boid : wolves_)
-						//{
-						//	Wolf* wolf = (Wolf*)boid;
-						//	wolf->marker_ = selected_marker_;
-						//	wolf->local_matrix_ = wolf->local_matrix_ * previous_marker->world_matrix_ * selected_marker_inverse_world_matrix;
-						//}
 					}
+					
 				}
 			}
 		}
@@ -241,20 +238,8 @@ void GameStatePC::SwapTargetMarker(int target)
 
 void GameStatePC::SwapMarker()
 {
-	Marker::ANCHOR previous_anchor = selected_marker_->anchor_;
-	std::vector<Boid*>* previous_boids = selected_marker_->boids_;
-	selected_marker_->anchor_ = Marker::ANCHOR::NONE;
-	selected_marker_->boids_ = nullptr;
+	Marker::CHILD previous_anchor = selected_marker_->child_;
+	selected_marker_->child_ = Marker::CHILD::NONE;
 	selected_marker_ = targeted_marker_;
-	selected_marker_->anchor_ = previous_anchor;
-	selected_marker_->boids_ = previous_boids;
+	selected_marker_->child_ = previous_anchor;
 }
-
-//
-//selected_marker_->selected_ = false;
-//selected_marker_->occupied_ = false;
-//Marker previous_marker = *selected_marker_;
-//selected_marker_->anchor_ = Marker::ANCHOR::NONE;
-//selected_marker_ = targeted_marker_;
-//selected_marker_->selected_ = true;
-//selected_marker_->anchor_ = previous_marker.anchor_;

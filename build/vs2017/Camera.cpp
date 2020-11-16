@@ -9,7 +9,7 @@
 Camera::Camera(gef::Platform& platform, gef::InputManager* input_manager) :
 	platform_(platform),
 	input_manager_(input_manager),
-	eye_(gef::Vector4(0, 1300.0f, ENVIRONMENT_HALF_DEPTH * 4 + 300.f)),
+	eye_(gef::Vector4(0, 00, 0)),
 	look_at_(gef::Vector4(0.0f, 0.0f, 0.0f)),
 	up_(gef::Vector4(0.0f, 1.0f, 0.0f)),
 	camera_fov_(gef::DegToRad(25.0f)),
@@ -20,7 +20,7 @@ Camera::Camera(gef::Platform& platform, gef::InputManager* input_manager) :
 	pitch_(-45.f),
 	rotateSpeed(52.f),
 	speed_(1000.f),
-	active_(false)
+	active_(true)
 {
 }
 

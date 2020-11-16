@@ -8,6 +8,7 @@ Model::Model(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes) :
 	renderer_3D_(renderer_3D)
 {
 	local_matrix_.SetIdentity();
+	marker_matrix_.SetIdentity();
 }
 
 void Model::PushMatrix()
