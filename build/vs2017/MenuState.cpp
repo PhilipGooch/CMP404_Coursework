@@ -7,7 +7,11 @@
 #include <input/input_manager.h>
 #include <input/keyboard.h>
 #include "StateMachine.h"
+#include "Camera.h"
 #include "Cow.h"
+#include "Wolf.h"
+#include "Tree.h"
+#include "primitive_builder.h"
 
 MenuState::MenuState(gef::Platform* platform, 
 					 gef::InputManager* input_manager, 
@@ -29,11 +33,50 @@ MenuState::MenuState(gef::Platform* platform,
 	SetupLights();
 
 	cow_ = new Cow(renderer_3D, meshes);
+	cow_->position_ = gef::Vector4(0.f, 0.f, 0.f);
+	cow_->velocity_ = gef::Vector4(0.f, 0.f, 0.f);
 	gef::Matrix44 cow_matrix;
 	cow_matrix.SetIdentity();
-	cow_matrix.SetTranslation(gef::Vector4(0.f, 0.f, -100.f));
-	cow_->position_ = gef::Vector4(0.f, 0.f, 0.f);
+	cow_matrix.RotationY(-0.77);
+	cow_matrix.SetTranslation(gef::Vector4(-50.f, -50.f, -100.f));
 	cow_->marker_matrix_ = cow_matrix;
+
+	wolf_ = new Wolf(renderer_3D, meshes);
+	wolf_->position_ = gef::Vector4(0.f, 0.f, 0.f);
+	wolf_->velocity_ = gef::Vector4(0.f, 0.f, 0.f);
+	gef::Matrix44 wolf_matrix;
+	wolf_matrix.SetIdentity();
+	wolf_matrix.RotationY(-2.37f);
+	wolf_matrix.SetTranslation(gef::Vector4(50.f, -45.f, -100.f));
+	wolf_->marker_matrix_ = wolf_matrix;
+
+	gef::Matrix44 plane_matrix;
+	plane_matrix.SetIdentity();
+	plane_matrix.SetTranslation(gef::Vector4(0, -50.f, -100));
+	plane_mesh_instance_.set_mesh(meshes[38]);
+	plane_mesh_instance_.set_transform(plane_matrix);
+
+	tree_ = new Tree(renderer_3D, meshes);
+	gef::Matrix44 tree_matrix;
+	tree_matrix.SetIdentity();
+	tree_matrix.SetTranslation(gef::Vector4(320, -34.f, -500));
+	tree_->marker_matrix_ = tree_matrix;
+
+	tree_2_ = new Tree(renderer_3D, meshes);
+	gef::Matrix44 tree_2_matrix;
+	tree_2_matrix.SetIdentity();
+	tree_2_matrix.SetTranslation(gef::Vector4(-270, -34.f, -600));
+	tree_2_->marker_matrix_ = tree_2_matrix;
+
+	tree_3_ = new Tree(renderer_3D, meshes);
+	gef::Matrix44 tree_3_matrix;
+	tree_3_matrix.SetIdentity();
+	tree_3_matrix.SetTranslation(gef::Vector4(250, -34.f, -850));
+	tree_3_->marker_matrix_ = tree_3_matrix;
+}
+
+MenuState::~MenuState()
+{
 }
 
 bool MenuState::HandleInput()
@@ -65,7 +108,7 @@ void MenuState::Update(float delta_time)
 {
 	fps_ = 1.f / delta_time;
 
-	cow_->Update(delta_time);
+	//cow_->Update(delta_time);
 }
 
 void MenuState::Render()
@@ -74,7 +117,12 @@ void MenuState::Render()
 	renderer_3D_->set_view_matrix(view_matrix_);
 	renderer_3D_->Begin(true);
 
+	renderer_3D_->DrawMesh(plane_mesh_instance_);
 	cow_->Render();
+	wolf_->Render();
+	tree_->Render();
+	tree_2_->Render();
+	tree_3_->Render();
 
 	renderer_3D_->End();
 
@@ -90,8 +138,8 @@ void MenuState::DrawHUD()
 	if (font_)
 	{
 		font_->RenderText(sprite_renderer_, gef::Vector4(480.f, 50.f, -0.9f), 3.5f, 0xff000000, gef::TJ_CENTRE, "TITLE");
-		font_->RenderText(sprite_renderer_, gef::Vector4(480.f, 200.f, -0.9f), 2.0f, 0xff000000, gef::TJ_CENTRE, "1. PLAY");
-		font_->RenderText(sprite_renderer_, gef::Vector4(480.f, 275.f, -0.9f), 2.0f, 0xff000000, gef::TJ_CENTRE, "2. OPTIONS");
+		font_->RenderText(sprite_renderer_, gef::Vector4(480.f, 200.f, -0.9f), 2.0f, 0xff000000, gef::TJ_CENTRE, "PLAY");
+		font_->RenderText(sprite_renderer_, gef::Vector4(480.f, 275.f, -0.9f), 2.0f, 0xff000000, gef::TJ_CENTRE, "OPTIONS");
 		font_->RenderText(sprite_renderer_, gef::Vector4(850.0f, 510.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f", fps_);
 	}
 	sprite_renderer_->End();

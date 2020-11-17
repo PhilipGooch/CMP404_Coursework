@@ -1,5 +1,4 @@
 #include "Wolf.h"
-#include <math.h> // atan2
 
 Wolf::Wolf(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	Model(renderer_3d, meshes)
@@ -11,16 +10,6 @@ Wolf::Wolf(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	ears_dimensions = gef::Vector4(2.f, 2.f, 1.f);
 	legs_dimensions = gef::Vector4(2.f, 8.f, 2.f);
 	tail_dimensions = gef::Vector4(2.f, 8.f, 2.f);
-
-	//body_offset = gef::Vector4(0, body_dimensions.y() + leg_dimensions.y() * 2, 0);
-	//head_offset = gef::Vector4(0, body_dimensions.y() - head_dimensions.y() / 2, body_dimensions.z() + head_dimensions.z());
-	//front_left_leg_offset = gef::Vector4(body_dimensions.x() - leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), body_dimensions.z() - leg_dimensions.z());
-	//back_left_leg_offset = gef::Vector4(body_dimensions.x() - leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), -body_dimensions.z() + leg_dimensions.z());
-	//front_right_leg_offset = gef::Vector4(-body_dimensions.x() + leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), body_dimensions.z() - leg_dimensions.z());
-	//back_right_leg_offset = gef::Vector4(-body_dimensions.x() + leg_dimensions.x(), -body_dimensions.y() - leg_dimensions.y(), -body_dimensions.z() + leg_dimensions.z());
-	//left_horn_offset = gef::Vector4(-head_dimensions.x() - horn_dimensions.x(), head_dimensions.y() - horn_dimensions.z(), horn_dimensions.z());
-	//right_horn_offset = gef::Vector4(head_dimensions.x() + horn_dimensions.x(), head_dimensions.y() - horn_dimensions.z(), horn_dimensions.z());
-	//udders_offset = gef::Vector4(0, -body_dimensions.y() - udders_dimensions.y(), -body_dimensions.z() + udders_dimensions.z());
 
 	body_offset = gef::Vector4(0.f, body_dimensions.y() + legs_dimensions.y() * 2.f, 0);
 	mane_offset = gef::Vector4(0.f, 1.f, body_dimensions.z() + mane_dimensions.z());
@@ -48,10 +37,10 @@ Wolf::Wolf(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	back_left_leg_direction = -1.f;
 	back_right_leg_direction = 1.f;
 
-	front_left_leg_angle = 0;
-	front_right_leg_angle = 0;
-	back_left_leg_angle = 0;
-	back_right_leg_angle = 0;
+	front_left_leg_angle  = 0.f;
+	front_right_leg_angle = 0.f;
+	back_left_leg_angle   = 0.f;
+	back_right_leg_angle  = 0.f;
 
 	leg_rotation_speed = 3.f;
 	max_leg_rotation = 3.142f / 4;
@@ -70,6 +59,9 @@ void Wolf::Update(float delta_time)
 
 void Wolf::Animate(float delta_time)
 {
+	leg_rotation_speed = vMap(vMagnitudeSquared(velocity_), 0, max_speed_ * max_speed_, 0.8f, 3.9f);
+	max_leg_rotation = vMap(vMagnitudeSquared(velocity_), 0, max_speed_ * max_speed_, 0.3f, 0.9f);
+
 	float* leg_angles[4]{ &front_left_leg_angle, &front_right_leg_angle, &back_left_leg_angle, &back_right_leg_angle };
 	float* leg_directions[4]{ &front_left_leg_direction, &front_right_leg_direction, &back_left_leg_direction, &back_right_leg_direction };
 

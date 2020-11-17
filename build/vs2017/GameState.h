@@ -11,6 +11,7 @@
 class Boid;
 class Wolf;
 class Marker;
+#include "Tree.h"
 
 class GameState : public State
 {
@@ -45,5 +46,7 @@ protected:
 
 	int number_of_wolves_;
 	std::vector<Boid*> wolves_;
+
+	Tree* tree_;
 };
 

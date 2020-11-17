@@ -32,13 +32,13 @@ Cow::Cow(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	back_left_leg_direction = -1.f;
 	back_right_leg_direction = 1.f;
 
-	front_left_leg_angle = 0;
-	front_right_leg_angle = 0;
-	back_left_leg_angle = 0;
-	back_right_leg_angle = 0;
+	front_left_leg_angle  = 0.f;
+	front_right_leg_angle = 0.f;
+	back_left_leg_angle   = 0.f;
+	back_right_leg_angle  = 0.f;
 
 	leg_rotation_speed = 3.f;
-	max_leg_rotation = 3.142f / 4;
+	max_leg_rotation = 3.142f / 4.f;
 
 	leg_joint_offset = gef::Vector4(0.f, leg_dimensions.y(), 0.f);
 }
@@ -50,6 +50,9 @@ void Cow::Update(float delta_time)
 
 void Cow::Animate(float delta_time)
 {
+	leg_rotation_speed = vMap(vMagnitudeSquared(velocity_), 0, max_speed_ * max_speed_, 0.8f, 3.9f);
+	max_leg_rotation = vMap(vMagnitudeSquared(velocity_), 0, max_speed_ * max_speed_, 0.3f, 0.9f);
+
 	float* leg_angles[4] { &front_left_leg_angle, &front_right_leg_angle, &back_left_leg_angle, &back_right_leg_angle };
 	float* leg_directions[4] { &front_left_leg_direction, &front_right_leg_direction, &back_left_leg_direction, &back_right_leg_direction };
 

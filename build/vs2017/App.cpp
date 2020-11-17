@@ -224,11 +224,28 @@ void App::LoadMaterials()
 	materials_.push_back(LoadMaterial("textures/markers/b_5.png"));				// 106
 	materials_.push_back(LoadMaterial("textures/markers/b_6.png"));				// 107
 
+	// TREE
+	//////////////////////////////////////////////////////////////////////////////////
+
+	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 108
+	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 109
+	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 110
+	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 111
+	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 112
+	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 113
+
+	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 114
+	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 115
+	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 116
+	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 117
+	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 118
+	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 119
+
 	// COLOURS
 	//////////////////////////////////////////////////////////////////////////////////
 
-	materials_.push_back(LoadMaterial("textures/colours/red.png"));			  
 	materials_.push_back(LoadMaterial("textures/colours/green.png"));		  
+	materials_.push_back(LoadMaterial("textures/colours/red.png"));			  
 	materials_.push_back(LoadMaterial("textures/colours/blue.png"));		  
 	materials_.push_back(LoadMaterial("textures/colours/yellow.png"));		  
 	materials_.push_back(LoadMaterial("textures/colours/cyan.png"));		  
@@ -328,6 +345,19 @@ void App::CreateMeshes()
 	meshes_.push_back(b_5);					// 36
 	meshes_.push_back(b_6);					// 37
 
-	
+	// MENU
+	//////////////////////////////////////////////////////////////////////////////////
+
+	gef::Mesh* plane_mesh = primitive_builder_->CreatePlaneMesh(gef::Vector4(1000.f, 0.f, 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[120]);
+
+	meshes_.push_back(plane_mesh);			// 38
+
+	// TREE
+	//////////////////////////////////////////////////////////////////////////////////
+	gef::Mesh* leaves = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f, 16.f, 16.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[108]);
+	gef::Mesh* wood = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f, 16.f, 16.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[114]);
+
+	meshes_.push_back(leaves);				// 39
+	meshes_.push_back(wood);				// 40
 }
 

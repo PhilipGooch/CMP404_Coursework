@@ -3,9 +3,12 @@
 #include "State.h"
 
 #include <maths/matrix44.h>
+#include <graphics/mesh_instance.h>
 
 class Cow;
 class Camera;
+class Wolf;
+class Tree;
 
 class MenuState : public State
 {
@@ -35,5 +38,13 @@ private:
 	Camera* camera_;
 
 	Cow* cow_;
+
+	Wolf* wolf_;
+
+	Tree* tree_;
+	Tree* tree_2_;
+	Tree* tree_3_;
+
+	gef::MeshInstance plane_mesh_instance_;
 };
 

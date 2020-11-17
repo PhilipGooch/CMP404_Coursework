@@ -80,6 +80,12 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 		Wolf* wolf = (Wolf*)boid;
 		wolf->marker_matrix_ = markers_[5]->world_matrix_;
 	}
+
+	tree_ = new Tree(renderer_3D, meshes);
+	gef::Matrix44 tree_matrix;
+	tree_matrix.SetIdentity();
+	tree_matrix.SetTranslation(gef::Vector4(0, -134.f, -200));
+	tree_->marker_matrix_ = tree_matrix;
 }
 
 bool GameStatePC::HandleInput()

@@ -15,11 +15,10 @@ public:
 
 	gef::Vector4 predator_;
 	gef::Vector4 position_;
-protected:
 	gef::Vector4 velocity_;
+protected:
 	gef::Vector4 acceleration_;
 
-private:
 	float perception_;
 	float max_force_;
 	float max_speed_;
@@ -31,13 +30,7 @@ private:
 	float flee_weight_;
 	float flee_radius_;
 
-	
-	void Edges();
-	gef::Vector4 Separation(std::vector<Boid*> boids);
-	gef::Vector4 Alignment(std::vector<Boid*> boids);
-	gef::Vector4 Cohesion(std::vector<Boid*> boids);
-
-	float vDistance(gef::Vector4 a, gef::Vector4 b);
+	float vDistance(gef::Vector4 a, gef::Vector4 b); // these functions should be in their own library.
 	float vMagnitudeSquared(gef::Vector4 vector);
 	float vMagnitude(gef::Vector4 vector);
 	gef::Vector4 vDivide(gef::Vector4 vector, float divisor);
@@ -46,5 +39,12 @@ private:
 	gef::Vector4 vSetMagnitude(gef::Vector4 vector, float magnitude);
 	gef::Vector4 vLimit(gef::Vector4 vector, float max);
 	gef::Vector4 vClamp(gef::Vector4 vector, float min, float max);
+	float vMap(float value, float min_A, float max_A, float min_B, float max_B); // not vector math but should be in personal math library with vector functions.
+
+private:
+	void Edges();
+	gef::Vector4 Separation(std::vector<Boid*> boids);
+	gef::Vector4 Alignment(std::vector<Boid*> boids);
+	gef::Vector4 Cohesion(std::vector<Boid*> boids);
 };
 

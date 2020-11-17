@@ -45,6 +45,8 @@ void GameState::Render()
 		wolf->Render();
 	}
 
+	tree_->Render();
+
 	renderer_3D_->End();
 
 	DrawHUD();

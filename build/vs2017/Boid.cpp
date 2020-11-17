@@ -255,3 +255,7 @@ gef::Vector4 Boid::vClamp(gef::Vector4 vector, float min, float max)
 	}
 	return vector;
 }
+
+float Boid::vMap(float value, float min_A, float max_A, float min_B, float max_B) {
+	return min_B + (max_B - min_B) * ((value - min_A) / (max_A - min_A));
+}

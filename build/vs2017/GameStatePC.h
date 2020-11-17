@@ -28,5 +28,6 @@ private:
 	Camera* camera_;
 
 	std::vector<float> angles_;
+
 };
 
