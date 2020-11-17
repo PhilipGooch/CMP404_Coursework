@@ -227,19 +227,19 @@ void App::LoadMaterials()
 	// TREE
 	//////////////////////////////////////////////////////////////////////////////////
 
-	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 108
-	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 109
-	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 110
-	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 111
-	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 112
-	materials_.push_back(LoadMaterial("textures/tree/leaves.png"));				// 113
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 108
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 109
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 110
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 111
+	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 112
+	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 113
 
-	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 114
-	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 115
-	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 116
-	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 117
-	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 118
-	materials_.push_back(LoadMaterial("textures/tree/wood.png"));				// 119
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 114
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 115
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 116
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 117
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 118
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 119
 
 	// COLOURS
 	//////////////////////////////////////////////////////////////////////////////////
@@ -348,14 +348,14 @@ void App::CreateMeshes()
 	// MENU
 	//////////////////////////////////////////////////////////////////////////////////
 
-	gef::Mesh* plane_mesh = primitive_builder_->CreatePlaneMesh(gef::Vector4(1000.f, 0.f, 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[120]);
+	gef::Mesh* plane_mesh = primitive_builder_->CreatePlaneMesh(gef::Vector4(10000.f, 0.f, 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[120]);
 
 	meshes_.push_back(plane_mesh);			// 38
 
 	// TREE
 	//////////////////////////////////////////////////////////////////////////////////
-	gef::Mesh* leaves = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f, 16.f, 16.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[108]);
-	gef::Mesh* wood = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f, 16.f, 16.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[114]);
+	gef::Mesh* leaves = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f * 3, 16.f * 5, 16.f * 3), gef::Vector4(0.f, 0.f, 0.f), &materials_[114]);
+	gef::Mesh* wood = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f, 16.f * 3, 16.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[108]);
 
 	meshes_.push_back(leaves);				// 39
 	meshes_.push_back(wood);				// 40

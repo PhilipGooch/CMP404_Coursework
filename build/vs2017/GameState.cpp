@@ -20,6 +20,20 @@ GameState::GameState(gef::Platform* platform,
 	State(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes)
 {
 	SetupLights();
+
+	number_of_cows_ = 4;
+	number_of_wolves_ = 4;
+	number_of_markers_ = 6;
+
+	for (int i = 0; i < number_of_cows_; i++)
+	{
+		cows_.push_back(new Cow(renderer_3D_, meshes));
+	}
+
+	for (int i = 0; i < number_of_wolves_; i++)
+	{
+		wolves_.push_back(new Wolf(renderer_3D_, meshes));
+	}
 }
 
 void GameState::Render()

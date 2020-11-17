@@ -84,7 +84,7 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 	tree_ = new Tree(renderer_3D, meshes);
 	gef::Matrix44 tree_matrix;
 	tree_matrix.SetIdentity();
-	tree_matrix.SetTranslation(gef::Vector4(0, -134.f, -200));
+	tree_matrix.SetTranslation(gef::Vector4(0, 0.f, -200));
 	tree_->marker_matrix_ = tree_matrix;
 }
 

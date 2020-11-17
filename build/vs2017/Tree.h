@@ -19,8 +19,14 @@ public:
 	void SetBlockTransform(gef::MeshInstance & mesh_instance, gef::Vector4 position);
 
 protected:
-	gef::MeshInstance leaves;
-	gef::MeshInstance wood;
+	gef::MeshInstance leaves_;
+	gef::MeshInstance wood_;
+
+	gef::Vector4 leaves_dimensions_;
+	gef::Vector4 wood_dimensions_;
+
+	gef::Vector4 leaves_offset_;
+	gef::Vector4 wood_offset_;
 };
 
 

@@ -257,3 +257,7 @@ void GameStateVITA::Update(float delta_time)
 		cow->Update(delta_time);
 	}
 }
+
+void GameStateVITA::Initialize()
+{
+}

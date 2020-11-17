@@ -15,3 +15,6 @@ model and marker should have world, local, and parent transformation matrices? m
 change material and mesh vector to map?
 
 delete pointers. important for changing states.
+
+create local renderer3d? lots of calls to it. pointer chasing.
+4.71
