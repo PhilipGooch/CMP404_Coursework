@@ -44,5 +44,16 @@ void Marker::Update()
 
 void Marker::Render()
 {
+#if VITA_MODE
+	gef::Matrix44 rotate;
+	rotate.SetIdentity();
+	rotate.RotationX(3.141592 / 2);
+
+	gef::Matrix44 scale;
+	scale.SetIdentity();
+	scale.Scale(gef::Vector4(0.001f, 0.001f, 0.001f, 1.f));
+
+	mesh_instance_.set_transform(rotate * scale * mesh_instance_.transform());
+#endif
 	renderer_3D_->DrawMesh(mesh_instance_);
 }

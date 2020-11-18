@@ -1,5 +1,7 @@
 #include "Wolf.h"
 
+#include <math.h>
+
 Wolf::Wolf(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	Model(renderer_3d, meshes)
 {

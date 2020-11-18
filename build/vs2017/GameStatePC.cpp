@@ -207,6 +207,36 @@ void GameStatePC::Update(float delta_time)
 	}
 }
 
+void GameStatePC::Render()
+{
+	renderer_3D_->set_projection_matrix(projection_matrix_);
+	renderer_3D_->set_view_matrix(view_matrix_);
+	renderer_3D_->Begin(true);
+
+	for (Marker* marker : markers_)
+	{
+		marker->Render();
+	}
+
+	for (Boid* boid : cows_)
+	{
+		Cow* cow = (Cow*)boid;
+		cow->Render();
+	}
+
+	for (Boid* boid : wolves_)
+	{
+		Wolf* wolf = (Wolf*)boid;
+		wolf->Render();
+	}
+
+	tree_->Render();
+
+	renderer_3D_->End();
+
+	DrawHUD();
+}
+
 void GameStatePC::MoveMarker(gef::Vector4 velocity)
 {
 	gef::Vector4 position = targeted_marker_->world_matrix_.GetTranslation();

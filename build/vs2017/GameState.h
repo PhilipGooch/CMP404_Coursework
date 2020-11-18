@@ -25,8 +25,6 @@ public:
 			  StateMachine* state_machine,
 			  std::vector<gef::Mesh*> meshes);
 
-	void Render() override;
-
 protected:
 	void DrawHUD();
 	void SetupLights();
@@ -40,6 +38,7 @@ protected:
 	Marker* wolf_marker_;
 	Marker* targeted_marker_;
 	Marker* selected_marker_;
+	Marker* previous_marker_;
 
 	int number_of_cows_;
 	std::vector<Boid*> cows_;

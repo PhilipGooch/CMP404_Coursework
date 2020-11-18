@@ -10,10 +10,7 @@ namespace gef
 	class TextureVita;
 }
 
-//#include <gxm.h>
-//#include <motion.h>
-//#include <libdbg.h>
-//#include <libsmart.h>
+
 
 namespace gef
 {
@@ -31,9 +28,12 @@ public:
 				  gef::Font* font,
 				  StateMachine* state_machine,
 				  std::vector<gef::Mesh*> meshes);
+	
+	~GameStateVITA();
 
 	bool HandleInput() override;
 	void Update(float delta_time) override;
+	void Render() override;
 
 private:
 	void SwapTargetMarker(int target);

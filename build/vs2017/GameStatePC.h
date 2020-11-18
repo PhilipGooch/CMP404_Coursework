@@ -18,6 +18,7 @@ public:
 
 	bool HandleInput() override;
 	void Update(float delta_time) override;
+	void Render() override;
 
 private:
 	void MoveMarker(gef::Vector4 velocity);

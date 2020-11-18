@@ -17,12 +17,18 @@ GameState::GameState(gef::Platform* platform,
 					 gef::Font* font,
 					 StateMachine* state_machine,
 					 std::vector<gef::Mesh*> meshes) :
-	State(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes)
+	State(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes),
+	cow_marker_(nullptr),
+	wolf_marker_(nullptr),
+	targeted_marker_(nullptr),
+	selected_marker_(nullptr),
+	previous_marker_(nullptr),
+	tree_(nullptr)
 {
 	SetupLights();
 
-	number_of_cows_ = 4;
-	number_of_wolves_ = 4;
+	number_of_cows_ = 3;
+	number_of_wolves_ = 3;
 	number_of_markers_ = 6;
 
 	for (int i = 0; i < number_of_cows_; i++)
@@ -36,36 +42,6 @@ GameState::GameState(gef::Platform* platform,
 	}
 
 	tree_ = new Tree(renderer_3D, meshes);
-}
-
-void GameState::Render()
-{
-	renderer_3D_->set_projection_matrix(projection_matrix_);
-	renderer_3D_->set_view_matrix(view_matrix_);
-	renderer_3D_->Begin(true);
-
-	for (Marker* marker : markers_)
-	{
-		marker->Render();
-	}
-
-	for (Boid* boid : cows_)
-	{
-		Cow* cow = (Cow*)boid;
-		cow->Render();
-	}
-
-	for (Boid* boid : wolves_)
-	{
-		Wolf* wolf = (Wolf*)boid;
-		wolf->Render();
-	}
-
-	tree_->Render();
-
-	renderer_3D_->End();
-
-	DrawHUD();
 }
 
 void GameState::DrawHUD()
