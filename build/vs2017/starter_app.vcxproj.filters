@@ -63,6 +63,12 @@
     <ClCompile Include="Tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameStateVITA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ar_app.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StateMachine.h">
@@ -112,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateVITA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ar_app.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

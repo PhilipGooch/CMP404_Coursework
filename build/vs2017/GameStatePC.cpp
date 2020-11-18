@@ -23,23 +23,13 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 	std::vector<gef::Mesh*> meshes) :
 	GameState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes)
 {
+	// PROJECTION and VIEW MATRICES
 	camera_ = new Camera(*platform, input_manager);
 	camera_->eye_ = gef::Vector4(0, 1300.0f, 1300.f);
 	camera_->look_at_ = gef::Vector4(0.f, 0.f, 0.f);
+	projection_matrix_ = camera_->projection_matrix_;
+	view_matrix_ = camera_->view_matrix_;
 
-	number_of_cows_ = 4;
-	number_of_wolves_ = 4;
-	number_of_markers_ = 6;
-
-	for (int i = 0; i < number_of_cows_; i++)
-	{
-		cows_.push_back(new Cow(renderer_3D_, meshes));
-	}
-
-	for (int i = 0; i < number_of_wolves_; i++)
-	{
-		wolves_.push_back(new Wolf(renderer_3D_, meshes));
-	}
 
 	// MARKERS
 	std::vector<gef::Vector4> marker_translations
@@ -81,7 +71,6 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 		wolf->marker_matrix_ = markers_[5]->world_matrix_;
 	}
 
-	tree_ = new Tree(renderer_3D, meshes);
 	gef::Matrix44 tree_matrix;
 	tree_matrix.SetIdentity();
 	tree_matrix.SetTranslation(gef::Vector4(0, 0.f, -200));
@@ -92,7 +81,6 @@ bool GameStatePC::HandleInput()
 {
 	if (input_manager_)
 	{
-
 		input_manager_->Update();
 		gef::Keyboard* keyboard = input_manager_->keyboard();
 		if (keyboard)

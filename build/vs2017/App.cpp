@@ -79,6 +79,7 @@ bool App::Update(float delta_time)
 	State* state = state_machine_->GetState();
 	if (!state) return false;
 	if (!state->HandleInput()) return false;
+
 	state->Update(delta_time);
 
 	return true;

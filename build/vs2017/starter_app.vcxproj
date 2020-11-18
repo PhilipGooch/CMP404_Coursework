@@ -28,11 +28,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="ar_app.cpp" />
     <ClCompile Include="Boid.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cow.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStatePC.cpp" />
+    <ClCompile Include="GameStateVITA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marker.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -46,11 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="ar_app.h" />
     <ClInclude Include="Boid.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cow.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStatePC.h" />
+    <ClInclude Include="GameStateVITA.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Marker.h" />
     <ClInclude Include="MenuState.h" />

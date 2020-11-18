@@ -19,3 +19,4 @@ State::State(gef::Platform* platform,
 	fps_(-1.f)
 {
 }
+

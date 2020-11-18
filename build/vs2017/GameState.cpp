@@ -34,6 +34,8 @@ GameState::GameState(gef::Platform* platform,
 	{
 		wolves_.push_back(new Wolf(renderer_3D_, meshes));
 	}
+
+	tree_ = new Tree(renderer_3D, meshes);
 }
 
 void GameState::Render()

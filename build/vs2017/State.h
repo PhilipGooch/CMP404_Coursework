@@ -40,6 +40,8 @@ public:
 	virtual void Update(float delta_time) = 0;
 	virtual void Render() = 0;
 
+	StateMachine* GetStateMachine() { return state_machine_; }
+
 protected:
 	gef::Platform* platform_;
 	gef::InputManager* input_manager_;
