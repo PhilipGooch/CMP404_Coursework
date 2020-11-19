@@ -162,7 +162,7 @@ gef::Vector4 Boid::Flee(std::vector<Boid*> boids)
 {
 	gef::Vector4 steering = gef::Vector4(0.f, 0.f, 0.f);
 	gef::Vector4 desired = position_ - predator_;
-	float distance = vDistance(position_, predator_);
+	float distance = vDistance(position_, predator_);				// make distance squared!
 	if (distance < flee_radius_)
 	{
 		desired = vSetMagnitude(desired, max_speed_);
@@ -176,9 +176,13 @@ void Boid::SetPredatorLocalTransform(gef::Vector4 predator)
 {
 	// converting from sony coordinates to normal...
 	// setting elevation to 0 as cows are in 2D space so not interested in elevation component.
+#if VITA_MODE
 	predator.set_z(-predator.y());
 	predator.set_y(0);
 	predator *= 1000.f;
+#else
+	//predator.set_z(-predator.z());
+#endif
 	predator_ = predator;
 }
 

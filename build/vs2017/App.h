@@ -47,9 +47,6 @@ private:
 
 	StateMachine* state_machine_;
 
-	std::map<std::string, gef::Material*> materials_map_;
-	std::map<gef::Mesh*, std::string> meshes_map_;
-
 	std::vector<gef::Material*> materials_;
 	std::vector<gef::Mesh*> meshes_;
 
