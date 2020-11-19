@@ -4,8 +4,8 @@
 Tree::Tree(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes) :
 	Model(renderer_3d, meshes)
 {
-	leaves_.set_mesh(meshes[45]);
-	wood_.set_mesh(meshes[46]);
+	leaves_.set_mesh(meshes[14]);
+	wood_.set_mesh(meshes[15]);
 
 	leaves_dimensions_ = gef::Vector4(16.f * 3, 16.f * 5, 16.f * 3);
 	wood_dimensions_ = gef::Vector4(16.f, 16.f * 3, 16.f * 0);

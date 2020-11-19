@@ -25,23 +25,23 @@ void Marker::Update()
 	
 	if (child_ == CHILD::COW)
 	{
-		mesh_instance_.set_mesh(meshes_[20 + ID_]);
+		mesh_instance_.set_mesh(meshes_[22 + ID_]);
 	}
 	else if (child_ == CHILD::WOLF)
 	{
-		mesh_instance_.set_mesh(meshes_[32 + ID_]);
+		mesh_instance_.set_mesh(meshes_[34 + ID_]);
 	}
 	else if (child_ == CHILD::TREE)
 	{
-		mesh_instance_.set_mesh(meshes_[32 + ID_]);
+		mesh_instance_.set_mesh(meshes_[40 + ID_]);
 	}
 	else if (targeted_)
 	{
-		mesh_instance_.set_mesh(meshes_[26 + ID_]);
+		mesh_instance_.set_mesh(meshes_[28 + ID_]);
 	}
 	else
 	{
-		mesh_instance_.set_mesh(meshes_[14 + ID_]);
+		mesh_instance_.set_mesh(meshes_[16 + ID_]);
 	}
 	mesh_instance_.set_transform(world_matrix_);
 }

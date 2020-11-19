@@ -54,7 +54,7 @@ MenuState::MenuState(gef::Platform* platform,
 	gef::Matrix44 plane_matrix;
 	plane_matrix.SetIdentity();
 	plane_matrix.SetTranslation(gef::Vector4(0, -50.f, -1000));
-	plane_mesh_instance_.set_mesh(meshes[44]);
+	plane_mesh_instance_.set_mesh(meshes[46]);
 	plane_mesh_instance_.set_transform(plane_matrix);
 
 	tree_ = new Tree(renderer_3D, meshes);
