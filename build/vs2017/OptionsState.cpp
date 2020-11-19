@@ -4,6 +4,7 @@
 #include <graphics/sprite_renderer.h>
 #include <graphics/renderer_3d.h>
 #include <graphics/font.h>
+#include <audio/audio_manager.h>
 #include <input/input_manager.h>
 #include <input/keyboard.h>
 #include "StateMachine.h"
@@ -43,6 +44,7 @@ bool OptionsState::HandleInput()
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_3))	
 			{
 				state_machine_->SetState(StateMachine::STATE::MENU);
+				audio_manager_->PlaySample(0, false);
 			}
 
 		}

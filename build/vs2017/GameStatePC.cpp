@@ -6,6 +6,8 @@
 #include <system/platform.h>
 #include <graphics/sprite_renderer.h>
 #include <graphics/font.h>
+#include <audio/audio_manager.h>
+#include <algorithm>
 #include "Boid.h"
 #include "Cow.h"
 #include "Wolf.h"
@@ -71,10 +73,9 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 		wolf->marker_matrix_ = markers_[5]->world_matrix_;
 	}
 
-	gef::Matrix44 tree_matrix;
-	tree_matrix.SetIdentity();
-	tree_matrix.SetTranslation(gef::Vector4(0, 0.f, -200));
-	tree_->marker_matrix_ = tree_matrix;
+	tree_marker_ = markers_[2];
+	tree_marker_->child_ = Marker::CHILD::TREE;
+	tree_->marker_matrix_ = tree_marker_->world_matrix_;
 }
 
 bool GameStatePC::HandleInput()
@@ -179,6 +180,17 @@ bool GameStatePC::HandleInput()
 
 void GameStatePC::Update(float delta_time)
 {
+	int random = rand() % 1000;	// expensive? doing division each frame for fps as well
+
+	if ((random >= 2 && random <= 6) || (random >= 7 && random <= 11))
+	{
+		if (!audio_manager_->sample_voice_playing(random))
+		{
+			audio_manager_->PlaySample(random, false);
+		}
+	}
+
+
 	fps_ = 1.f / delta_time;
 
 	camera_->Update(delta_time);
@@ -201,10 +213,12 @@ void GameStatePC::Update(float delta_time)
 	for (Boid* boid : wolves_)
 	{
 		Wolf* wolf = (Wolf*)boid;
-		wolf->marker_matrix_ = markers_[5]->world_matrix_;
+		wolf->marker_matrix_ = wolf_marker_->world_matrix_;
 		wolf->Flock(wolves_, delta_time);
 		wolf->Update(delta_time);
 	}
+
+	tree_->marker_matrix_ = tree_marker_->world_matrix_;
 }
 
 void GameStatePC::Render()

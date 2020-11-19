@@ -36,6 +36,7 @@ public:
 	// abstract classes can not be instantiated.
 	// child classes MUST override these functions or they will also be abstract.
 
+	void Init();
 	virtual bool HandleInput() = 0;
 	virtual void Update(float delta_time) = 0;
 	virtual void Render() = 0;

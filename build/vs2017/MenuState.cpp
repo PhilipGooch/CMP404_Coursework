@@ -4,6 +4,7 @@
 #include <graphics/sprite_renderer.h>
 #include <graphics/renderer_3d.h>
 #include <graphics/font.h>
+#include <audio/audio_manager.h>
 #include <input/input_manager.h>
 #include <input/keyboard.h>
 #include "StateMachine.h"
@@ -53,7 +54,7 @@ MenuState::MenuState(gef::Platform* platform,
 	gef::Matrix44 plane_matrix;
 	plane_matrix.SetIdentity();
 	plane_matrix.SetTranslation(gef::Vector4(0, -50.f, -1000));
-	plane_mesh_instance_.set_mesh(meshes[38]);
+	plane_mesh_instance_.set_mesh(meshes[44]);
 	plane_mesh_instance_.set_transform(plane_matrix);
 
 	tree_ = new Tree(renderer_3D, meshes);
@@ -94,10 +95,12 @@ bool MenuState::HandleInput()
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_1)) 		
 			{
 				state_machine_->SetState(StateMachine::STATE::GAME);
+				audio_manager_->PlaySample(0, false);
 			}
 			if (keyboard->IsKeyDown(gef::Keyboard::KC_2)) 			
 			{
 				state_machine_->SetState(StateMachine::STATE::OPTIONS);
+				audio_manager_->PlaySample(0, false);
 			}
 		}
 	}

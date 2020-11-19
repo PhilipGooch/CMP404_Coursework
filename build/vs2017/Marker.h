@@ -22,7 +22,8 @@ public:
 	{
 		NONE,
 		COW,
-		WOLF
+		WOLF,
+		TREE
 	};
 
 	void SetWorldMatrix(gef::Matrix44 world_matrix) { world_matrix_ = world_matrix; }

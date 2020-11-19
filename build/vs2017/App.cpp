@@ -42,7 +42,18 @@ void App::Init()
 	LoadMaterials();
 	CreateMeshes();
 
+	LoadAudio();
+
 	state_machine_ = new StateMachine(&platform_, input_manager_, audio_manager_, sprite_renderer_, renderer_3D_, font_, meshes_);
+
+	/*bool toggle = true;
+	if (!toggle)
+		audio_manager_->StopPlayingSampleVoice(0);
+	else
+	{
+		audio_manager_->PlaySample(4, true);
+	}*/
+	audio_manager_->PlayMusic();
 }
 
 void App::CleanUp()
@@ -107,6 +118,13 @@ void App::LoadMaterials()
 {
 	// COW
 	//////////////////////////////////////////////////////////////////////////////////
+
+	materials_map_["cow_body_front"] = 	LoadMaterial("textures/cow/body/front.png");
+	materials_map_["cow_body_back"] =	LoadMaterial("textures/cow/body/back.png");
+	materials_map_["cow_body_left"] = 	LoadMaterial("textures/cow/body/left.png");
+	materials_map_["cow_body_right"] = 	LoadMaterial("textures/cow/body/right.png");
+	materials_map_["cow_body_top"] = 	LoadMaterial("textures/cow/body/top.png");
+	materials_map_["cow_body_bottom"] =	LoadMaterial("textures/cow/body/bottom.png");
 
 	materials_.push_back(LoadMaterial("textures/cow/body/front.png"));			// 0 
 	materials_.push_back(LoadMaterial("textures/cow/body/back.png"));			// 1
@@ -224,23 +242,29 @@ void App::LoadMaterials()
 	materials_.push_back(LoadMaterial("textures/markers/b_4.png"));				// 105
 	materials_.push_back(LoadMaterial("textures/markers/b_5.png"));				// 106
 	materials_.push_back(LoadMaterial("textures/markers/b_6.png"));				// 107
+	materials_.push_back(LoadMaterial("textures/markers/y_1.png"));				// 108
+	materials_.push_back(LoadMaterial("textures/markers/y_2.png"));				// 109
+	materials_.push_back(LoadMaterial("textures/markers/y_3.png"));				// 110
+	materials_.push_back(LoadMaterial("textures/markers/y_4.png"));				// 111
+	materials_.push_back(LoadMaterial("textures/markers/y_5.png"));				// 112
+	materials_.push_back(LoadMaterial("textures/markers/y_6.png"));				// 113
 
 	// TREE
 	//////////////////////////////////////////////////////////////////////////////////
 
-	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 108
-	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 109
-	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 110
-	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 111
-	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 112
-	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 113
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 114
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 115
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 116
+	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 117
+	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 118
+	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 119
 
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 114
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 115
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 116
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 117
-	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 118
-	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 119
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 120
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 121
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 123
+	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 124
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 125
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 126                         
 
 	// COLOURS
 	//////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +282,7 @@ void App::CreateMeshes()
 	// COW
 	//////////////////////////////////////////////////////////////////////////////////
 
-	gef::Mesh* cow_body = primitive_builder_->CreateBoxMesh(gef::Vector4(12.f, 10.f, 18.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[0]);
+	gef::Mesh* cow_body = primitive_builder_->CreateBoxMesh(gef::Vector4(12.f, 10.f, 18.f), gef::Vector4(0.f, 0.f, 0.f), &materials_map_["cow_body_front"]);
 	gef::Mesh* cow_head = primitive_builder_->CreateBoxMesh(gef::Vector4(8.f, 8.f, 6.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[6]);
 	gef::Mesh* cow_left_leg = primitive_builder_->CreateBoxMesh(gef::Vector4(4.f, 12.f, 4.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[12]);
 	gef::Mesh* cow_right_leg = primitive_builder_->CreateBoxMesh(gef::Vector4(4.f, 12.f, 4.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[18]);
@@ -320,6 +344,13 @@ void App::CreateMeshes()
 	gef::Mesh* b_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[105]);
 	gef::Mesh* b_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[106]);
 	gef::Mesh* b_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[107]);
+	gef::Mesh* y_1 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[108]);
+	gef::Mesh* y_2 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[109]);
+	gef::Mesh* y_3 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[110]);
+	gef::Mesh* y_4 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[111]);
+	gef::Mesh* y_5 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[112]);
+	gef::Mesh* y_6 = primitive_builder_->CreatePlaneMesh(gef::Vector4(0.059f / 2 * 1000.f, 0, 0.059f / 2 * 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[113]);
+
 
 	meshes_.push_back(w_1);					// 14																									
 	meshes_.push_back(w_2);					// 15																										
@@ -345,20 +376,54 @@ void App::CreateMeshes()
 	meshes_.push_back(b_4);					// 35
 	meshes_.push_back(b_5);					// 36
 	meshes_.push_back(b_6);					// 37
+	meshes_.push_back(y_1);					// 38
+	meshes_.push_back(y_2);					// 39
+	meshes_.push_back(y_3);					// 40
+	meshes_.push_back(y_4);					// 41
+	meshes_.push_back(y_5);					// 42
+	meshes_.push_back(y_6);					// 43
 
 	// MENU
 	//////////////////////////////////////////////////////////////////////////////////
 
-	gef::Mesh* plane_mesh = primitive_builder_->CreatePlaneMesh(gef::Vector4(10000.f, 0.f, 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[120]);
+	gef::Mesh* plane_mesh = primitive_builder_->CreatePlaneMesh(gef::Vector4(10000.f, 0.f, 1000.f), gef::Vector4(0.f, 0.f, 0.f), materials_[126]);
 
-	meshes_.push_back(plane_mesh);			// 38
+	meshes_.push_back(plane_mesh);			// 44
 
 	// TREE
 	//////////////////////////////////////////////////////////////////////////////////
-	gef::Mesh* leaves = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f * 3, 16.f * 5, 16.f * 3), gef::Vector4(0.f, 0.f, 0.f), &materials_[114]);
-	gef::Mesh* wood = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f, 16.f * 3, 16.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[108]);
+	gef::Mesh* leaves = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f * 3, 16.f * 5, 16.f * 3), gef::Vector4(0.f, 0.f, 0.f), &materials_[120]);
+	gef::Mesh* wood = primitive_builder_->CreateBoxMesh(gef::Vector4(16.f, 16.f * 3, 16.f), gef::Vector4(0.f, 0.f, 0.f), &materials_[114]);
 
-	meshes_.push_back(leaves);				// 39
-	meshes_.push_back(wood);				// 40
+	meshes_.push_back(leaves);				// 45
+	meshes_.push_back(wood);				// 46
 }
+
+void App::LoadAudio()
+{
+	audio_manager_->LoadMusic("audio/music/music_full.wav", platform_);						// 0
+																			
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/buttons/button.wav", platform_));	// 0
+
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/breath_1.wav", platform_));	// 1
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/moo_1.wav", platform_));		// 2
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/moo_2.wav", platform_));		// 3
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/moo_3.wav", platform_));		// 4
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/moo_4.wav", platform_));		// 5
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/moo_5.wav", platform_));		// 6
+																
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/bark_1.wav", platform_));		// 7
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/bark_2.wav", platform_));		// 8
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/bark_3.wav", platform_));		// 9
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/growl_1.wav", platform_));	// 
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/growl_2.wav", platform_));	// 
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/hurt_1.wav", platform_));		// 
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/hurt_2.wav", platform_));		// 
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/hurt_3.wav", platform_));		// 
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/pant.wav", platform_));		// 
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/wolf/whine.wav", platform_));		// 
+																	
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/footsteps.wav", platform_));	// 
+	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/cow/hit.wav", platform_));			// 
+}																			
 

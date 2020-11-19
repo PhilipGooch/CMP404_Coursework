@@ -31,6 +31,10 @@ void Marker::Update()
 	{
 		mesh_instance_.set_mesh(meshes_[32 + ID_]);
 	}
+	else if (child_ == CHILD::TREE)
+	{
+		mesh_instance_.set_mesh(meshes_[32 + ID_]);
+	}
 	else if (targeted_)
 	{
 		mesh_instance_.set_mesh(meshes_[26 + ID_]);

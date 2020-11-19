@@ -36,6 +36,7 @@ protected:
 	std::vector<Marker*> markers_;
 	Marker* cow_marker_;
 	Marker* wolf_marker_;
+	Marker* tree_marker_;
 	Marker* targeted_marker_;
 	Marker* selected_marker_;
 	Marker* previous_marker_;
@@ -47,5 +48,6 @@ protected:
 	std::vector<Boid*> wolves_;
 
 	Tree* tree_;
+
 };
 

@@ -4,6 +4,7 @@
 #include <graphics/sprite_renderer.h>
 #include <graphics/renderer_3d.h>
 #include <graphics/font.h>
+#include <audio/audio_manager.h>
 #include "Boid.h"
 #include "Cow.h"
 #include "Wolf.h"
@@ -20,6 +21,7 @@ GameState::GameState(gef::Platform* platform,
 	State(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes),
 	cow_marker_(nullptr),
 	wolf_marker_(nullptr),
+	tree_marker_(nullptr),
 	targeted_marker_(nullptr),
 	selected_marker_(nullptr),
 	previous_marker_(nullptr),

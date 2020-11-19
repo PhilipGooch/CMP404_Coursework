@@ -34,6 +34,7 @@ private:
 	gef::Material* LoadMaterial(char* file_name);
 	void LoadMaterials();
 	void CreateMeshes();
+	void LoadAudio();
 
 	gef::InputManager* input_manager_;
 	gef::AudioManager* audio_manager_;
@@ -46,10 +47,12 @@ private:
 
 	StateMachine* state_machine_;
 
-	std::map<gef::Material*, std::string> materials_map_;
+	std::map<std::string, gef::Material*> materials_map_;
 	std::map<gef::Mesh*, std::string> meshes_map_;
 
 	std::vector<gef::Material*> materials_;
 	std::vector<gef::Mesh*> meshes_;
+
+	std::vector<int> sfx_IDs_;
 };
 

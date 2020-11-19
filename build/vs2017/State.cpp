@@ -20,3 +20,8 @@ State::State(gef::Platform* platform,
 {
 }
 
+void State::Init()
+{
+	
+}
+

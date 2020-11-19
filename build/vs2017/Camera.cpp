@@ -20,7 +20,7 @@ Camera::Camera(gef::Platform& platform, gef::InputManager* input_manager) :
 	pitch_(-45.f),
 	rotateSpeed(52.f),
 	speed_(1000.f),
-	active_(true)
+	active_(false)
 {
 }
 
