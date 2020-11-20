@@ -167,7 +167,7 @@ bool GameStatePC::HandleInput()
 						{
 							Cow* cow = (Cow*)boid;
 							cow->marker_matrix_ = selected_marker_->world_matrix_;
-							cow->local_matrix_ = cow->local_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
+							cow->local_marker_matrix_ = cow->local_marker_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
 						}
 					}
 					
@@ -202,17 +202,17 @@ void GameStatePC::Update(float delta_time)
 		marker->Update();
 	}
 
-	gef::Matrix44 predator_matrix;
-	predator_matrix = markers_[2]->world_matrix_;		
-
-	gef::Matrix44 cow_marker_matrix_inverse;
-	cow_marker_matrix_inverse.AffineInverse(cow_marker_->world_matrix_);
+	//gef::Matrix44 predator_matrix;
+	//predator_matrix = markers_[2]->world_matrix_;		
+	//
+	//gef::Matrix44 cow_marker_matrix_inverse;
+	//cow_marker_matrix_inverse.AffineInverse(cow_marker_->world_matrix_);
 
 	for (Boid* boid : cows_)
 	{
 		Cow* cow = (Cow*)boid; 
 		cow->marker_matrix_ = selected_marker_->world_matrix_;
-		cow->SetPredatorLocalTransform((predator_matrix * cow_marker_matrix_inverse).GetTranslation());
+		//cow->SetPredatorLocalTransform((predator_matrix * cow_marker_matrix_inverse).GetTranslation());
 		cow->Flock(cows_, delta_time);
 		cow->Update(delta_time);
 	}

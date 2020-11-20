@@ -17,8 +17,7 @@ class Model : public Boid
 public:
 	Model(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes);
 	
-	gef::Matrix44 local_matrix_;
-	gef::Matrix44 marker_matrix_;	
+	
 protected:
 	gef::Renderer3D* renderer_3D_;
 

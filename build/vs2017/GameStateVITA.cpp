@@ -143,7 +143,7 @@ void GameStateVITA::Update(float delta_time)
 				{
 					Cow* cow = (Cow*)boid;
 					cow->marker_matrix_ = cow_marker_->world_matrix_;
-					cow->local_matrix_ = cow->local_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
+					cow->local_marker_matrix_ = cow->local_marker_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
 				}
 
 				

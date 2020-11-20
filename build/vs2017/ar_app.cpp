@@ -106,7 +106,7 @@ void ARApp::Init()
 	for (Boid* boid : cows)
 	{
 		Cow* cow = (Cow*)boid;
-		cow->local_matrix_.SetIdentity();
+		cow->local_marker_matrix_.SetIdentity();
 		//cow->marker_matrix_ = selected_marker_;
 	}
 
@@ -263,7 +263,7 @@ bool ARApp::HandleInput()
 					{
 						Cow* cow = (Cow*)boid;
 						//cow->marker_matrix_ = selected_marker;
-						cow->local_matrix_ = cow->local_matrix_ * previous_marker * selected_marker_inverse;
+						cow->local_marker_matrix_ = cow->local_marker_matrix_ * previous_marker * selected_marker_inverse;
 					}
 
 				}

@@ -29,18 +29,20 @@ GameState::GameState(gef::Platform* platform,
 {
 	SetupLights();
 
-	number_of_cows_ = 3;
+	number_of_cows_ = 4;
 	number_of_wolves_ = 3;
 	number_of_markers_ = 6;
 
 	for (int i = 0; i < number_of_cows_; i++)
 	{
 		cows_.push_back(new Cow(renderer_3D_, meshes));
+		cows_[i]->predators_ = &wolves_;
 	}
 
 	for (int i = 0; i < number_of_wolves_; i++)
 	{
 		wolves_.push_back(new Wolf(renderer_3D_, meshes));
+		wolves_[i]->prey_ = &cows_;
 	}
 
 	tree_ = new Tree(renderer_3D, meshes);

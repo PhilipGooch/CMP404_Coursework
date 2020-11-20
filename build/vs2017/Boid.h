@@ -10,12 +10,21 @@ public:
 	Boid();
 
 	void Flock(std::vector<Boid*> boids, float delta_time);
-	gef::Vector4 Flee(std::vector<Boid*> boids);
+	gef::Vector4 Repel();
+	gef::Vector4 Attract();
 	void SetPredatorLocalTransform(gef::Vector4 predator);
+	gef::Matrix44 GetWorldMatrix();
+
+	std::vector<Boid*>* predators_;
+	std::vector<Boid*>* prey_;
 
 	gef::Vector4 predator_;
+
 	gef::Vector4 position_;
 	gef::Vector4 velocity_;
+
+	gef::Matrix44 local_marker_matrix_;		// local matrix of the marker if parented to another marker
+	gef::Matrix44 marker_matrix_;
 protected:
 	gef::Vector4 acceleration_;
 

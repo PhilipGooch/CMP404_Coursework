@@ -7,8 +7,6 @@
 Model::Model(gef::Renderer3D* renderer_3D, std::vector<gef::Mesh*> meshes) :
 	renderer_3D_(renderer_3D)
 {
-	local_matrix_.SetIdentity();
-	marker_matrix_.SetIdentity();
 }
 
 void Model::PushMatrix()
@@ -73,7 +71,7 @@ void Model::Draw(gef::MeshInstance& mesh_instance)
 		matrix = matrix * matrix_stack_[i];
 	}
 
-	matrix = matrix * local_matrix_ * marker_matrix_;
+	matrix = matrix * local_marker_matrix_ * marker_matrix_;
 
 	mesh_instance.set_transform(matrix);
 	renderer_3D_->DrawMesh(mesh_instance);
