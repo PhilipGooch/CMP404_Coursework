@@ -11,6 +11,7 @@
 #include "Boid.h"
 #include "Cow.h"
 #include "Wolf.h"
+#include "Tree.h"
 #include "Marker.h"
 #include "Camera.h"
 #include "StateMachine.h"
@@ -38,7 +39,7 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 	{
 		gef::Vector4(-400, 0, -300),
 		gef::Vector4(0, 0, -300),
-		gef::Vector4(400, 0, -300),
+		gef::Vector4(0, 0, 0 ),
 		gef::Vector4(-400, 0, 300),
 		gef::Vector4(0, 0, 300),
 		gef::Vector4(400, 0, 300)
@@ -75,7 +76,12 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 
 	tree_marker_ = markers_[2];
 	tree_marker_->child_ = Marker::CHILD::TREE;
-	tree_->marker_matrix_ = tree_marker_->world_matrix_;
+	tree_marker_->boids_ = &trees_;
+	for (Boid* boid : trees_)
+	{
+		Tree* tree = (Tree*)boid;
+		tree->marker_matrix_ = tree_marker_->world_matrix_;
+	}
 }
 
 bool GameStatePC::HandleInput()
@@ -212,7 +218,6 @@ void GameStatePC::Update(float delta_time)
 	{
 		Cow* cow = (Cow*)boid; 
 		cow->marker_matrix_ = selected_marker_->world_matrix_;
-		//cow->SetPredatorLocalTransform((predator_matrix * cow_marker_matrix_inverse).GetTranslation());
 		cow->Flock(cows_, delta_time);
 		cow->Update(delta_time);
 	}
@@ -225,7 +230,11 @@ void GameStatePC::Update(float delta_time)
 		wolf->Update(delta_time);
 	}
 
-	tree_->marker_matrix_ = tree_marker_->world_matrix_;
+	for (Boid* boid : trees_)
+	{
+		Tree* tree = (Tree*)boid;
+		tree->marker_matrix_ = tree_marker_->world_matrix_;
+	}
 }
 
 void GameStatePC::Render()
@@ -251,7 +260,11 @@ void GameStatePC::Render()
 		wolf->Render();
 	}
 
-	tree_->Render();
+	for (Boid* boid : trees_)
+	{
+		Tree* tree = (Tree*)boid;
+		tree->Render(true);
+	}
 
 	renderer_3D_->End();
 

@@ -8,6 +8,7 @@
 #include "Boid.h"
 #include "Cow.h"
 #include "Wolf.h"
+#include "Tree.h"
 #include "Marker.h"
 
 GameState::GameState(gef::Platform* platform, 
@@ -23,29 +24,33 @@ GameState::GameState(gef::Platform* platform,
 	wolf_marker_(nullptr),
 	tree_marker_(nullptr),
 	targeted_marker_(nullptr),
-	selected_marker_(nullptr),
-	previous_marker_(nullptr),
-	tree_(nullptr)
+	selected_marker_(nullptr)
 {
 	SetupLights();
 
 	number_of_cows_ = 4;
 	number_of_wolves_ = 3;
 	number_of_markers_ = 6;
+	number_of_trees_ = 3;
 
 	for (int i = 0; i < number_of_cows_; i++)
 	{
 		cows_.push_back(new Cow(renderer_3D_, meshes));
 		cows_[i]->predators_ = &wolves_;
+		cows_[i]->trees_ = &trees_;
 	}
 
 	for (int i = 0; i < number_of_wolves_; i++)
 	{
 		wolves_.push_back(new Wolf(renderer_3D_, meshes));
 		wolves_[i]->prey_ = &cows_;
+		wolves_[i]->trees_ = &trees_;
 	}
 
-	tree_ = new Tree(renderer_3D, meshes);
+	for (int i = 0; i < number_of_trees_; i++)
+	{
+		trees_.push_back(new Tree(renderer_3D, meshes));
+	}
 }
 
 void GameState::DrawHUD()

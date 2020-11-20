@@ -6,12 +6,10 @@
 
 #include <vector>
 #include <maths/matrix44.h>
-#include <graphics/mesh_instance.h>
 
 class Boid;
 class Wolf;
 class Marker;
-#include "Tree.h"
 
 class GameState : public State
 {
@@ -39,7 +37,6 @@ protected:
 	Marker* tree_marker_;
 	Marker* targeted_marker_;
 	Marker* selected_marker_;
-	Marker* previous_marker_;
 
 	int number_of_cows_;
 	std::vector<Boid*> cows_;
@@ -47,7 +44,8 @@ protected:
 	int number_of_wolves_;
 	std::vector<Boid*> wolves_;
 
-	Tree* tree_;
+	int number_of_trees_;
+	std::vector<Boid*> trees_;
 
 };
 

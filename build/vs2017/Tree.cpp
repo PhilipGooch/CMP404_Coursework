@@ -19,9 +19,17 @@ void Tree::Update(float delta_time)
 	
 }
 
-void Tree::Render()
+void Tree::Render(bool game_state)
 {
 	PushMatrix();	
+#if VITA_MODE
+		Scale(gef::Vector4(0.001f, 0.001f, 0.001f, 1.f)); // scale down to sony unit sizes
+		RotateX(3.141592 / 2); // rotate to sony coordinate system
+#endif
+		if (game_state)
+		{
+			Translate(position_);
+		}
 		Translate(wood_offset_);
 		Draw(wood_);
 		PushMatrix();

@@ -10,15 +10,11 @@ public:
 	Boid();
 
 	void Flock(std::vector<Boid*> boids, float delta_time);
-	gef::Vector4 Repel();
-	gef::Vector4 Attract();
-	void SetPredatorLocalTransform(gef::Vector4 predator);
 	gef::Matrix44 GetWorldMatrix();
 
 	std::vector<Boid*>* predators_;
 	std::vector<Boid*>* prey_;
-
-	gef::Vector4 predator_;
+	std::vector<Boid*>* trees_;
 
 	gef::Vector4 position_;
 	gef::Vector4 velocity_;
@@ -55,5 +51,7 @@ private:
 	gef::Vector4 Separation(std::vector<Boid*> boids);
 	gef::Vector4 Alignment(std::vector<Boid*> boids);
 	gef::Vector4 Cohesion(std::vector<Boid*> boids);
+	gef::Vector4 Repel();
+	gef::Vector4 Attract();
 };
 

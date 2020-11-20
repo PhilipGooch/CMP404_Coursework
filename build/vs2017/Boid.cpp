@@ -13,7 +13,8 @@ Boid::Boid() :
 	flee_weight_(5.f),
 	flee_radius_(100.f),
 	predators_(nullptr),
-	prey_(nullptr)
+	prey_(nullptr),
+	trees_(nullptr)
 {
 	local_marker_matrix_.SetIdentity();
 	marker_matrix_.SetIdentity();
@@ -28,6 +29,7 @@ Boid::Boid() :
 	position_ = gef::Vector4(x, 0.f, z);
 	velocity_ = gef::Vector4(vx, 0.f, vz);
 	acceleration_ = gef::Vector4(ax, 0.f, az);
+
 }
 
 void Boid::Flock(std::vector<Boid*> boids, float delta_time)
@@ -166,7 +168,7 @@ gef::Vector4 Boid::Cohesion(std::vector<Boid*> boids)
 
 gef::Vector4 Boid::Repel()
 {
-	if (!predators_) return gef::Vector4(0.f, 0.f, 0.f);
+	if (!predators_ && !trees_) return gef::Vector4(0.f, 0.f, 0.f);
 
 	gef::Matrix44 inverse_marker_matrix_;
 	inverse_marker_matrix_.AffineInverse(marker_matrix_);
@@ -174,18 +176,28 @@ gef::Vector4 Boid::Repel()
 	gef::Vector4 steering = gef::Vector4(0.f, 0.f, 0.f);
 	gef::Vector4 desired = gef::Vector4(0.f, 0.f, 0.f);
 	int count = 0;
-	for (Boid* predator : *predators_)
+	if (predators_)
 	{
-		gef::Vector4 predator_local_position = (predator->GetWorldMatrix() * inverse_marker_matrix_).GetTranslation();
-
-		float distance = vDistance(position_, predator_local_position);
-		
+		for (Boid* predator : *predators_)
+		{
+			gef::Vector4 predator_local_position = (predator->GetWorldMatrix() * inverse_marker_matrix_).GetTranslation();
+			float distance = vDistance(position_, predator_local_position);
+			if (distance < flee_radius_)
+			{
+				desired += position_ - predator_local_position;
+				count++;
+			}
+		}
+	}
+	for (Boid* tree : *trees_)
+	{
+		gef::Vector4 tree_local_position = (tree->GetWorldMatrix() * inverse_marker_matrix_).GetTranslation();
+		float distance = vDistance(position_, tree_local_position);
 		if (distance < flee_radius_)
 		{
-			desired += position_ - predator_local_position;
+			desired += position_ - tree_local_position;
 			count++;
 		}
-		
 	}
 	if (count > 0)
 	{
@@ -230,20 +242,6 @@ gef::Vector4 Boid::Attract()
 	}
 
 	return steering;
-}
-
-void Boid::SetPredatorLocalTransform(gef::Vector4 predator)
-{
-	// converting from sony coordinates to normal...
-	// setting elevation to 0 as cows are in 2D space so not interested in elevation component.
-#if VITA_MODE
-	predator.set_z(-predator.y());
-	predator.set_y(0);
-	predator *= 1000.f;
-#else
-	//predator.set_z(-predator.z());
-#endif
-	predator_ = predator;
 }
 
 gef::Matrix44 Boid::GetWorldMatrix()

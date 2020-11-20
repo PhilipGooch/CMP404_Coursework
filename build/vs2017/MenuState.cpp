@@ -123,9 +123,9 @@ void MenuState::Render()
 	renderer_3D_->DrawMesh(plane_mesh_instance_);
 	cow_->Render();
 	wolf_->Render();
-	tree_->Render();
-	tree_2_->Render();
-	tree_3_->Render();
+	tree_->Render(false);
+	tree_2_->Render(false);
+	tree_3_->Render(false);
 
 	renderer_3D_->End();
 

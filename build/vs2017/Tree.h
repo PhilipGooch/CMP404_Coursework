@@ -14,7 +14,7 @@ public:
 	Tree(gef::Renderer3D* renderer_3d, std::vector<gef::Mesh*> meshes);
 
 	void Update(float delta_time);
-	void Render();
+	void Render(bool game_state);
 
 	void SetBlockTransform(gef::MeshInstance & mesh_instance, gef::Vector4 position);
 

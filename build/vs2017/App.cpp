@@ -27,7 +27,7 @@ App::App(gef::Platform & platform) :
 
 void App::Init()
 {
-	srand(time(NULL));
+	srand(8);
 
 	input_manager_ = gef::InputManager::Create(platform_);
 	audio_manager_ = gef::AudioManager::Create();
