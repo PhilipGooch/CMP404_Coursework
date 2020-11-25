@@ -15,13 +15,11 @@
 #include <graphics/renderer_3d.h>
 #include <system/platform.h>
 #include <graphics/sprite_renderer.h>
-#include <audio/audio_manager.h>
 #include <graphics/font.h>
 #include "Boid.h"
 #include "Cow.h"
 #include "Wolf.h"
 #include "Marker.h"
-#include "Tree.h"
 #include "StateMachine.h"
 
 GameStateVITA::GameStateVITA(gef::Platform* platform,
@@ -63,7 +61,7 @@ GameStateVITA::GameStateVITA(gef::Platform* platform,
 	targeted_marker_ = markers_[0];
 	selected_marker_ = targeted_marker_;
 
-	cow_marker_ = selected_marker_;
+	cow_marker_ = markers_[0];
 	cow_marker_->child_ = Marker::CHILD::COW;
 	cow_marker_->boids_ = &cows_;
 	for (Boid* boid : cows_)
@@ -72,22 +70,13 @@ GameStateVITA::GameStateVITA(gef::Platform* platform,
 		cow->marker_matrix_ = cow_marker_->world_matrix_;
 	}
 
-	wolf_marker_ = markers_[2];
+	wolf_marker_ = markers_[5];
 	wolf_marker_->child_ = Marker::CHILD::WOLF;
 	wolf_marker_->boids_ = &wolves_;
 	for (Boid* boid : wolves_)
 	{
 		Wolf* wolf = (Wolf*)boid;
-		wolf->marker_matrix_ = wolf_marker_->world_matrix_;
-	}
-
-	tree_marker_ = markers_[3];
-	tree_marker_->child_ = Marker::CHILD::TREE;
-	tree_marker_->boids_ = &trees_;
-	for (Boid* boid : trees_)
-	{
-		Tree* tree = (Tree*)boid;
-		tree->marker_matrix_ = tree_marker_->world_matrix_;
+		wolf->marker_matrix_ = markers_[5]->world_matrix_;
 	}
 
 	// CAMERA FEED IMAGE
@@ -123,29 +112,18 @@ void GameStateVITA::Update(float delta_time)
 {
 	fps_ = 1.f / delta_time;
 
-	timer++;
-
-	//for (int i = 4; i <= 11; i++)
-	{
-		if (timer % 10000)
-		{
-			if (!audio_manager_->sample_voice_playing(9))
-				audio_manager_->PlaySample(9, false);
-		}
-	}
-
 	// MARKERS
 	AppData* dat = sampleUpdateBegin();
 	smartUpdate(dat->currentImage);
+
+	
 
 	if (!sampleIsMarkerFound(selected_marker_->ID_))
 	{
 		for (int i = 0; i < number_of_markers_; i++)
 		{
 			if (i == selected_marker_->ID_) continue;
-			if (i == wolf_marker_->ID_) continue;
-			if (i == tree_marker_->ID_) continue;
-	
+
 			if (sampleIsMarkerFound(i))
 			{
 				targeted_marker_ = markers_[i];
@@ -155,21 +133,21 @@ void GameStateVITA::Update(float delta_time)
 				selected_marker_ = targeted_marker_;
 				cow_marker_ = selected_marker_;
 				selected_marker_->child_ = previous_anchor;
-	
+
 				sampleGetTransform(selected_marker_->ID_, &selected_marker_->world_matrix_);
-	
+
 				gef::Matrix44 selected_marker_inverse_world_matrix;
 				selected_marker_inverse_world_matrix.AffineInverse(selected_marker_->world_matrix_);
-	
+
 				for (Boid* boid : cows_)
 				{
 					Cow* cow = (Cow*)boid;
 					cow->marker_matrix_ = cow_marker_->world_matrix_;
 					cow->local_marker_matrix_ = cow->local_marker_matrix_ * previous_marker_matrix * selected_marker_inverse_world_matrix;
 				}
-	
+
 				
-	
+
 				break;
 			}
 		}
@@ -177,17 +155,7 @@ void GameStateVITA::Update(float delta_time)
 
 	if (sampleIsMarkerFound(selected_marker_->ID_))
 	{
-		sampleGetTransform(selected_marker_->ID_, &selected_marker_->world_matrix_);
-	}
-
-	if (sampleIsMarkerFound(wolf_marker_->ID_))
-	{
-		sampleGetTransform(wolf_marker_->ID_, &wolf_marker_->world_matrix_);
-	}
-
-	if (sampleIsMarkerFound(tree_marker_->ID_))
-	{
-		sampleGetTransform(tree_marker_->ID_, &tree_marker_->world_matrix_);
+		sampleGetTransform(selected_marker_->ID_, &markers_[selected_marker_->ID_]->world_matrix_);
 	}
 
 
@@ -215,12 +183,6 @@ void GameStateVITA::Update(float delta_time)
 		wolf->Flock(wolves_, delta_time);
 		wolf->Update(delta_time);
 	}
-
-	for (Boid* boid : trees_)
-	{
-		Tree* tree = (Tree*)boid;
-		tree->marker_matrix_ = tree_marker_->world_matrix_;
-	}
 }
 
 void GameStateVITA::Render()
@@ -247,9 +209,7 @@ void GameStateVITA::Render()
 
 	for (Marker* marker : markers_)
 	{
-		if (marker->child_ == Marker::CHILD::COW ||
-			marker->child_ == Marker::CHILD::WOLF || 
-			marker->child_ == Marker::CHILD::TREE)
+		if (marker->child_ != Marker::CHILD::NONE)
 		{
 			marker->Render();
 		}
@@ -260,18 +220,14 @@ void GameStateVITA::Render()
 		Cow* cow = (Cow*)boid;
 		cow->Render();
 	}
-	
+
 	for (Boid* boid : wolves_)
 	{
 		Wolf* wolf = (Wolf*)boid;
 		wolf->Render();
 	}
-	
-	for (Boid* boid : trees_)
-	{
-		Tree* tree = (Tree*)boid;
-		tree->Render(true);
-	}
+
+	tree_->Render();
 
 	renderer_3D_->End();
 

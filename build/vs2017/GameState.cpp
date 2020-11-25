@@ -49,7 +49,7 @@ GameState::GameState(gef::Platform* platform,
 
 	for (int i = 0; i < number_of_trees_; i++)
 	{
-		trees_.push_back(new Tree(renderer_3D_, meshes));
+		trees_.push_back(new Tree(renderer_3D, meshes));
 	}
 }
 

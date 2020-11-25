@@ -41,8 +41,8 @@ void Boid::Flock(std::vector<Boid*> boids, float delta_time)
 	acceleration_ += Separation(boids) * separation_weight_;
 	acceleration_ += Alignment(boids) * alignment_weight_;
 	acceleration_ += Cohesion(boids) * cohesion_weight_;
-	//acceleration_ += Repel() * flee_weight_;
-	//cceleration_ += Attract() * flee_weight_;
+	acceleration_ += Repel() * flee_weight_;
+	acceleration_ += Attract() * flee_weight_;
 		
 	velocity_ += acceleration_ * delta_time; 
 	//velocity_ = vLimit(velocity_, m_max_speed);
@@ -181,7 +181,6 @@ gef::Vector4 Boid::Repel()
 		for (Boid* predator : *predators_)
 		{
 			gef::Vector4 predator_local_position = (predator->GetWorldMatrix() * inverse_marker_matrix_).GetTranslation();
-			//predator_local_position.set_y()
 			float distance = vDistance(position_, predator_local_position);
 			if (distance < flee_radius_)
 			{

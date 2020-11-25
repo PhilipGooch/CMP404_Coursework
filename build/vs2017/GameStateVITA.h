@@ -42,7 +42,5 @@ private:
 	gef::Matrix44 ortho_matrix_;
 	gef::Sprite camera_feed_sprite_;
 	gef::TextureVita* camera_feed_texture_;
-
-	int timer = 0;
 };
 

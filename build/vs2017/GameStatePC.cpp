@@ -58,7 +58,7 @@ GameStatePC::GameStatePC(gef::Platform* platform,
 	cow_marker_ = markers_[0];
 	cow_marker_->child_ = Marker::CHILD::COW;
 	cow_marker_->boids_ = &cows_;
-	//cow_marker_->targeted_ = true;
+	cow_marker_->targeted_ = true;
 	for (Boid* boid : cows_)
 	{
 		Cow* cow = (Cow*)boid;
