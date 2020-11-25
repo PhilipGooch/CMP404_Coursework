@@ -305,7 +305,7 @@ bool ARApp::Update(float delta_time)
 			gef::Matrix44 selected_marker_inverse;
 			selected_marker_inverse.AffineInverse(selected_marker_);
 
-			cow->SetPredatorLocalTransform((markers_[5] * selected_marker_inverse).GetTranslation());
+			//cow->SetPredatorLocalTransform((markers_[5] * selected_marker_inverse).GetTranslation());
 		}
 	}
 
@@ -330,7 +330,7 @@ bool ARApp::Update(float delta_time)
 				for (Boid* boid : cows)
 				{
 					Cow* cow = (Cow*)boid;
-					cow->local_matrix_ = cow->local_matrix_ * previous_marker_ * selected_marker_inverse;
+					cow->local_marker_matrix_ = cow->local_marker_matrix_ * previous_marker_ * selected_marker_inverse;
 				}
 
 				

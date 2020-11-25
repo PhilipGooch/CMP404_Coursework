@@ -46,14 +46,8 @@ void App::Init()
 
 	state_machine_ = new StateMachine(&platform_, input_manager_, audio_manager_, sprite_renderer_, renderer_3D_, font_, meshes_);
 
-	/*bool toggle = true;
-	if (!toggle)
-		audio_manager_->StopPlayingSampleVoice(0);
-	else
-	{
-		audio_manager_->PlaySample(4, true);
-	}*/
-	audio_manager_->PlayMusic();
+	//audio_manager_->PlayMusic();
+	
 }
 
 void App::CleanUp()
@@ -217,10 +211,10 @@ void App::LoadMaterials()
 	materials_.push_back(LoadMaterial("textures/tree/wood/xz.png"));			// 87
 	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 88
 	materials_.push_back(LoadMaterial("textures/tree/wood/y.png"));				// 89
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 90
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 91
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 92
-	materials_.push_back(LoadMaterial("textures/tree/leaves/xz.png"));			// 93
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 90
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 91
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 92
+	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 93
 	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 94
 	materials_.push_back(LoadMaterial("textures/tree/leaves/y.png"));			// 95                         
 																				
@@ -395,7 +389,7 @@ void App::CreateMeshes()
 
 void App::LoadAudio()
 {
-	audio_manager_->LoadMusic("audio/music/music_full.wav", platform_);						// 0
+	//audio_manager_->LoadMusic("audio/music/music_full.wav", platform_);						// 0
 																			
 	sfx_IDs_.push_back(audio_manager_->LoadSample("audio/buttons/button.wav", platform_));	// 0
 
