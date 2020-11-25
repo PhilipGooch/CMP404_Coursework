@@ -140,7 +140,7 @@ void GameStateVITA::Update(float delta_time)
 
 	if (!sampleIsMarkerFound(selected_marker_->ID_))
 	{
-		for (int i = 0; i < number_of_markers_; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			if (i == selected_marker_->ID_) continue;
 			if (i == wolf_marker_->ID_) continue;
@@ -188,7 +188,29 @@ void GameStateVITA::Update(float delta_time)
 	if (sampleIsMarkerFound(tree_marker_->ID_))
 	{
 		sampleGetTransform(tree_marker_->ID_, &tree_marker_->world_matrix_);
+		gef::Matrix44 selected_marker_inverse;
+		selected_marker_inverse.AffineInverse(selected_marker_->world_matrix_);
+		for (Boid* boid : cows_)
+		{
+			//Cow* cow = (Cow*)boid;
+			//cow->SetPredatorLocalTransform((tree_marker_->world_matrix_ * selected_marker_inverse).GetTranslation());
+		}
 	}
+
+	/*if (sampleIsMarkerFound(5))
+	{
+		sampleGetTransform(5, &markers_[5]->world_matrix_);
+		for (Boid* boid : cows_)
+		{
+			Cow* cow = (Cow*)boid;
+
+
+			gef::Matrix44 selected_marker_inverse;
+			selected_marker_inverse.AffineInverse(selected_marker_->world_matrix_);
+
+			cow->SetPredatorLocalTransform((markers_[5]->world_matrix_ * selected_marker_inverse).GetTranslation());
+		}
+	}*/
 
 
 	sampleUpdateEnd(dat);

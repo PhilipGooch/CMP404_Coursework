@@ -28,10 +28,10 @@ GameState::GameState(gef::Platform* platform,
 {
 	SetupLights();
 
-	number_of_cows_ = 4;
+	number_of_cows_ = 1;
 	number_of_wolves_ = 3;
 	number_of_markers_ = 6;
-	number_of_trees_ = 3;
+	number_of_trees_ = 1;
 
 	for (int i = 0; i < number_of_cows_; i++)
 	{

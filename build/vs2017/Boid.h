@@ -21,6 +21,10 @@ public:
 
 	gef::Matrix44 local_marker_matrix_;		// local matrix of the marker if parented to another marker
 	gef::Matrix44 marker_matrix_;
+
+	gef::Vector4 Flee(std::vector<Boid*> boids);
+	void SetPredatorLocalTransform(gef::Vector4 predator);
+	gef::Vector4 predator_;
 protected:
 	gef::Vector4 acceleration_;
 

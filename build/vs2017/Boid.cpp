@@ -27,7 +27,7 @@ Boid::Boid() :
 	float ax = 0.f;
 	float az = 0.f;
 	position_ = gef::Vector4(x, 0.f, z);
-	velocity_ = gef::Vector4(vx, 0.f, vz);
+	velocity_ = gef::Vector4(0, 0.f, 0);
 	acceleration_ = gef::Vector4(ax, 0.f, az);
 
 }
@@ -36,20 +36,87 @@ void Boid::Flock(std::vector<Boid*> boids, float delta_time)
 {
 	acceleration_ = gef::Vector4(0.f, 0.f, 0.f);
 
-	Edges();
+	//Edges();
 
-	acceleration_ += Separation(boids) * separation_weight_;
-	acceleration_ += Alignment(boids) * alignment_weight_;
-	acceleration_ += Cohesion(boids) * cohesion_weight_;
+	//acceleration_ += Separation(boids) * separation_weight_;
+	//acceleration_ += Alignment(boids) * alignment_weight_;
+	//acceleration_ += Cohesion(boids) * cohesion_weight_;
 	//acceleration_ += Repel() * flee_weight_;
 	//cceleration_ += Attract() * flee_weight_;
+	acceleration_ += Flee(boids) * cohesion_weight_;
 		
 	velocity_ += acceleration_ * delta_time; 
 	//velocity_ = vLimit(velocity_, m_max_speed);
-	velocity_ = vClamp(velocity_, min_speed_, max_speed_);
+	//velocity_ = vClamp(velocity_, min_speed_, max_speed_);
 		
 	position_ += velocity_ * delta_time;
 
+}
+
+gef::Vector4 Boid::Flee(std::vector<Boid*> boids)
+{
+	//// working
+	//if (!trees_) return gef::Vector4(0.f, 0.f, 0.f);
+	//
+	//gef::Matrix44 inverse_marker_matrix_;
+	//inverse_marker_matrix_.AffineInverse(marker_matrix_);
+	//
+	//gef::Vector4 tree_local_position = (trees_->front()->marker_matrix_ * inverse_marker_matrix_).GetTranslation();
+	//tree_local_position.set_z(-tree_local_position.y());
+	//tree_local_position.set_y(0);
+	//tree_local_position *= 1000.f;
+	//
+	//gef::Vector4 steering = gef::Vector4(0.f, 0.f, 0.f);
+	//gef::Vector4 desired = position_ - tree_local_position;
+	//float distance = vDistance(position_, tree_local_position);
+	//if (distance < flee_radius_)
+	//{
+	//	desired = vSetMagnitude(desired, max_speed_);
+	//	steering = desired - velocity_;
+	//	steering = vLimit(steering, max_force_);
+	//}
+	//return steering;
+
+
+
+	if (!trees_) return gef::Vector4(0.f, 0.f, 0.f);
+
+	gef::Matrix44 inverse_marker_matrix_;
+	inverse_marker_matrix_.AffineInverse(marker_matrix_);
+
+	gef::Matrix44 tree_local_transform;
+	tree_local_transform.SetIdentity();
+	tree_local_transform.SetTranslation(trees_->front()->position_);
+
+	tree_local_transform = tree_local_transform * trees_->front()->marker_matrix_ * inverse_marker_matrix_;
+
+	gef::Vector4 tree_marker_local_position = tree_local_transform.GetTranslation();
+
+	tree_marker_local_position.set_z(-tree_marker_local_position.y());
+	tree_marker_local_position.set_y(0);
+	tree_marker_local_position *= 1000.f;
+
+	gef::Vector4 steering = gef::Vector4(0.f, 0.f, 0.f);
+	gef::Vector4 desired = position_ - tree_marker_local_position;
+	float distance = vDistance(position_, tree_marker_local_position);
+	if (distance < flee_radius_)
+	{
+		desired = vSetMagnitude(desired, max_speed_);
+		steering = desired - velocity_;
+		steering = vLimit(steering, max_force_);
+	}
+	return steering;
+	
+}
+
+void Boid::SetPredatorLocalTransform(gef::Vector4 predator)
+{
+	// converting from sony coordinates to normal...
+	// setting elevation to 0 as cows are in 2D space so not interested in elevation component.
+	predator.set_z(-predator.y());
+	predator.set_y(0);
+	predator *= 1000.f;
+	predator_ = predator;
 }
 
 void Boid::Edges()
@@ -181,7 +248,9 @@ gef::Vector4 Boid::Repel()
 		for (Boid* predator : *predators_)
 		{
 			gef::Vector4 predator_local_position = (predator->GetWorldMatrix() * inverse_marker_matrix_).GetTranslation();
-			//predator_local_position.set_y()
+			predator_local_position.set_z(-predator_local_position.y());
+			predator_local_position.set_y(0);
+			predator_local_position *= 1000.f;
 			float distance = vDistance(position_, predator_local_position);
 			if (distance < flee_radius_)
 			{
