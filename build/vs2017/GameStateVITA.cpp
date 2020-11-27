@@ -34,6 +34,10 @@ GameStateVITA::GameStateVITA(gef::Platform* platform,
 	std::vector<gef::Mesh*> meshes) :
 	GameState(platform, input_manager, audio_manager, sprite_renderer, renderer_3D, font, state_machine, meshes)
 {
+	pm = new PrimitiveBuilder(*platform);
+	debugCubeMesh = pm->CreateBoxMesh(gef::Vector4(0.01, 0.01, 0.01));
+	debugCube.set_mesh(debugCubeMesh);
+
 	// INITIALIZE SONY FRAMEWORK
 	sampleInitialize();
 	smartInitialize();
@@ -197,6 +201,9 @@ void GameStateVITA::Update(float delta_time)
 		}
 	}
 
+
+	setDebugCubeTranspose(cows_.front()->tree_world_space);
+
 	/*if (sampleIsMarkerFound(5))
 	{
 		sampleGetTransform(5, &markers_[5]->world_matrix_);
@@ -295,6 +302,8 @@ void GameStateVITA::Render()
 		tree->Render(true);
 	}
 
+	renderer_3D_->DrawMesh(debugCube);
+
 	renderer_3D_->End();
 
 	sampleRenderEnd();
@@ -315,4 +324,9 @@ void GameStateVITA::SwapMarker()
 	selected_marker_->child_ = Marker::CHILD::NONE;
 	selected_marker_ = targeted_marker_;
 	selected_marker_->child_ = previous_anchor;
+}
+
+void GameStateVITA::setDebugCubeTranspose(gef::Matrix44 matrix)
+{
+	debugCube.set_transform(matrix);
 }

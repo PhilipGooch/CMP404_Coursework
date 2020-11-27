@@ -86,19 +86,40 @@ gef::Vector4 Boid::Flee(std::vector<Boid*> boids)
 
 	gef::Matrix44 tree_local_transform;
 	tree_local_transform.SetIdentity();
-	tree_local_transform.SetTranslation(trees_->front()->position_);
+	gef::Vector4 flipped_position(trees_->front()->position_.x(), -trees_->front()->position_.z(), trees_->front()->position_.y());
+	tree_local_transform.SetTranslation(flipped_position * 0.001f);
+	tree_world_space = tree_local_transform * trees_->front()->marker_matrix_;
+	//tree_world_space = trees_->front()->marker_matrix_ * tree_local_transform;
 
-	tree_local_transform = tree_local_transform * trees_->front()->marker_matrix_ * inverse_marker_matrix_;
+	//gef::Matrix44 scale;
+	//scale.SetIdentity();
+	//scale.Scale(gef::Vector4(1000.f, 1000.f, 1000.f));
 
-	gef::Vector4 tree_marker_local_position = tree_local_transform.GetTranslation();
+	//tree_local_transform = scale * tree_local_transform;
 
-	tree_marker_local_position.set_z(-tree_marker_local_position.y());
-	tree_marker_local_position.set_y(0);
-	tree_marker_local_position *= 1000.f;
+
+
+	//tree_local_transform = trees_->front()->marker_matrix_ * /*tree_local_transform * */inverse_marker_matrix_;
+
+	gef::Matrix44 cow_local_transform;
+	cow_local_transform.SetIdentity();
+	flipped_position = gef::Vector4(position_.x(), -position_.z(), position_.y());
+	cow_local_transform.SetTranslation(flipped_position * 0.001f);
+	cow_world_space = cow_local_transform * marker_matrix_;
+
+
+	gef::Matrix44 tree_cow_space = tree_world_space * inverse_marker_matrix_;
+	gef::Vector4 tree_cow_space_vector = tree_cow_space.GetTranslation();
+
+	tree_cow_space_vector.set_z(-tree_cow_space_vector.y());
+	tree_cow_space_vector.set_y(0);
+	//tree_marker_local_position *= 1000.f;
+
+	//tree_marker_local_position += trees_->front()->position_;
 
 	gef::Vector4 steering = gef::Vector4(0.f, 0.f, 0.f);
-	gef::Vector4 desired = position_ - tree_marker_local_position;
-	float distance = vDistance(position_, tree_marker_local_position);
+	gef::Vector4 desired = (position_ * 0.001f) - tree_cow_space_vector;
+	float distance = vDistance(position_ * 0.001f, tree_cow_space_vector);
 	if (distance < flee_radius_)
 	{
 		desired = vSetMagnitude(desired, max_speed_);

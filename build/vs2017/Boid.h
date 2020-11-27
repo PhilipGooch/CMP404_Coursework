@@ -9,6 +9,9 @@ class Boid
 public:
 	Boid();
 
+	gef::Matrix44 cow_world_space;
+	gef::Matrix44 tree_world_space;
+
 	void Flock(std::vector<Boid*> boids, float delta_time);
 	gef::Matrix44 GetWorldMatrix();
 

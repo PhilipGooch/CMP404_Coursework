@@ -5,6 +5,10 @@
 #include <camera.h>
 #include <graphics/sprite.h>
 
+#include <graphics\mesh.h>
+#include <graphics\mesh_instance.h>
+#include "primitive_builder.h"
+
 namespace gef
 {
 	class TextureVita;
@@ -44,5 +48,11 @@ private:
 	gef::TextureVita* camera_feed_texture_;
 
 	int timer = 0;
+
+	PrimitiveBuilder* pm;
+	gef::Mesh* debugCubeMesh;
+	gef::MeshInstance debugCube;
+
+	void setDebugCubeTranspose(gef::Matrix44 matrix);
 };
 
